@@ -1,0 +1,23 @@
+apiVersion: nais.io/v1
+kind: Naisjob
+metadata:
+  labels:
+    team: personbruker
+  name: innholdsoversikt-dashboard
+  namespace: personbruker
+spec:
+  accessPolicy:
+    outbound:
+      rules:
+      - application: nav-enonicxp-dataquery
+        cluster: prod-gcp
+  image: {{ image }}
+  schedule: '0 6 1 * *'
+  webproxy: true
+  env:
+    - name: GCP_BQ_OPPDATERING_CREDS
+      value: /var/run/secrets/secrets.json
+  filesFrom:
+    - secret: innholdsmengde-dashboard-secrets
+  backoffLimit: 0
+

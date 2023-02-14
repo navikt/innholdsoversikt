@@ -1,0 +1,5 @@
+data/
+__pycache__/
+.env
+secrets.json
+.DS_Store
