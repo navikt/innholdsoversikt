@@ -18,7 +18,7 @@ Kibana](https://logs.adeo.no/goto/6eac7c60-4a6a-11ed-8607-d590fd125f80).
 **Jobb lokalt**
 
 Bruk pyenv for å håndtere python-versjoner og poetry for versjonering av 
-avhengigheter.
+avhengigheter. 
 
 ```
 cd innholdsoversikt
