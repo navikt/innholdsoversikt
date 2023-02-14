@@ -33,7 +33,7 @@ jobs:
       name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install -r innholdsoversikt/requirements.txt
+        python -m pip install -r requirements.txt
     
     - name: Login to Github Container Registry GHCR
       id: login-ghcr
@@ -54,9 +54,9 @@ jobs:
       env:
         REGISTRY: "${{ steps.login-ghcr.outputs.registry }}/"
       with:
-        context: ./innholdsoversikt
+        context: .
         builder: ${{ steps.buildx.outputs.name }}
-        file: ./innholdsoversikt/Dockerfile
+        file: Dockerfile
         push: true
         cache-from: type=gha,scope=${{ github.workflow }}
         cache-to: type=gha,scope=${{ github.workflow }},mode=max
@@ -73,5 +73,5 @@ jobs:
       env:
         APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
         CLUSTER: prod-gcp
-        RESOURCE: innholdsoversikt/nais.yaml
+        RESOURCE: nais.yaml
         VAR: image=${{ env.docker_image }}
