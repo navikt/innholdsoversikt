@@ -1,11 +1,18 @@
 # %%
 import json
+import logging
 
 import numpy as np
 import pandas as pd
 
 from parse_json import extract_element_from_json
 
+logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 # %%
 def bygg_dataframe(liste):
     """
@@ -112,6 +119,7 @@ def bygg_dataframe(liste):
             "language": [item for sublist in list_language for item in sublist],
         }
     )
+    logging.info("Bygget dataframe")
     return df
 
 

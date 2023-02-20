@@ -3,6 +3,12 @@ import logging
 
 from google.cloud import storage
 
+logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 # %%
 def opprett_mappe(client, bucket_name, location, storage_class):
     """
@@ -121,9 +127,7 @@ def last_ned_i_minne(client, bucket_name, source_blob_name):
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(source_blob_name)
     contents = blob.download_as_string()
-    logging.info(
-        "Lastet %s inn i minne fra mappen %s", source_blob_name, bucket_name
-    )
+    logging.info("Lastet %s inn i minne fra mappen %s", source_blob_name, bucket_name)
     return contents
 
 

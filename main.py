@@ -16,6 +16,12 @@ from bq_tabell_jobber import oppdater_tabell, skrivover_tabell, oppdater_tabell_
 from gcs_api import last_opp_fil, hent_liste_blobs
 from get_url import url_parser
 
+logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 # %%
 DATA = ""
 client = os.environ["GCP_BQ_OPPDATERING_CREDS"]

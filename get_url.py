@@ -1,9 +1,17 @@
 # %%
+import logging
+
 import pandas as pd
 import requests
 import xmltodict
 from urllib.parse import urlparse
 
+logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 # %%
 def get_url_from_sitemap(url: str) -> pd.DataFrame:
     """
@@ -23,6 +31,7 @@ def get_url_from_sitemap(url: str) -> pd.DataFrame:
 
     data = [[r["loc"]] for r in raw["urlset"]["url"]]
     df = pd.DataFrame(data, columns=["links"])
+    logging.info("Returning all URLs for the URL %s", url)
     return df
 
 
@@ -41,6 +50,7 @@ def get_sitemaps_from_domain(domain: str) -> pd.DataFrame:
 
     data = [[r["loc"]] for r in raw["sitemapindex"]["sitemap"]]
     df = pd.DataFrame(data, columns=["links"])
+    logging.info("Returning all sitemaps for the domain %s", domain)
     return df
 
 
@@ -59,4 +69,5 @@ def url_parser(url):
         "directories": directories,
         "queries": queries,
     }
+    logging.info("Returning elements for the URL %s", url)
     return elements

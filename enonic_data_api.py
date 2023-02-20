@@ -7,7 +7,12 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-logging.basicConfig(level=logging.INFO)
+logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 # %%
 def eksport_innhold_enonic(branch, query, types, fields, filnavn):
     """
@@ -44,9 +49,9 @@ def eksport_innhold_enonic(branch, query, types, fields, filnavn):
     )
     response.raise_for_status()
     json_response = response.json()
-    print("Entire JSON response")
+    logging.info("Response object:")
     for key, value in json_response.items():
-        print(key, ":", value, "\n")
+        logging.info("%s : %s \n", key, value)
     result_url = json_response["resultUrl"]
     request_id = json_response["requestId"]
     header_status = ""
@@ -56,10 +61,10 @@ def eksport_innhold_enonic(branch, query, types, fields, filnavn):
 
         if status_response.status_code == 202:
             json_response = status_response.json()
-            print("File is being prepared")
+            logging.info("File is being prepared")
             for key, value in json_response.items():
-                print(key, ":", value, "\n")
-            print(status_response.headers)
+                logging.info("%s : %s \n", key, value)
+            logging.info(status_response.headers)
             time.sleep(5)
         elif status_response.status_code == 200:
             with tqdm.wrapattr(
@@ -69,13 +74,15 @@ def eksport_innhold_enonic(branch, query, types, fields, filnavn):
                 total=int(status_response.headers.get("content-length", 0)),
                 desc=innhold_data,
             ) as fout:
-                print(status_response.headers)
+                logging.info(status_response.headers)
                 for chunk in status_response.iter_content(chunk_size=8192):
                     fout.write(chunk)
             header_status = 200
         else:
-            print(
-                f"An error occurred, retrying to reach request ID {request_id} and request URL {result_url} in 10 seconds"
+            logging.info(
+                "An error occurred, retrying to reach request ID %s and request URL %s in 10 seconds",
+                request_id,
+                result_url,
             )
             time.sleep(10)
     return innhold_data
