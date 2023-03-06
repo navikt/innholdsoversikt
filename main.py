@@ -213,11 +213,10 @@ def innholdsoversikt_datoer(df):
     logging.info("Innholdsoversikt steg 3: Sett datoer")
     return df
 
-
-# %%
-
-
-def lastopp_innholdsoversikt_db(df):
+def innholdsoversikt_kategorisering(df, sti):
+    """
+    Kategoriserer innholdet og skriver csv til ønsket sti
+    """
     typer_sider = {
         "no.nav.navno:situation-page": "side",
         "no.nav.navno:dynamic-page": "side",
@@ -246,12 +245,10 @@ def lastopp_innholdsoversikt_db(df):
     }
     df["kategorier"] = df["innholdstype"].map(typer_sider)
     df.drop(columns=["produktType", "omrade"], inplace=True)
-    df.to_csv("/tmp/data.csv", index=False)
-    oppdater_tabell_csv(
-        client, "navno_innholdsmengde.innhold_tidsserie", "data.csv", "/tmp/data.csv"
-    )
-    logging.info("Innholdsoversikt steg 4: Lastet opp til database")
+    df.to_csv(sti, index=False)
+    logging.info("Innholdsoversikt steg 4: innholdet er kategorisert og skrevet til csv ved %s", sti)
 
+# %%
 
 def lastopp_csv():
     last_opp_fil(
@@ -262,9 +259,14 @@ def lastopp_csv():
     )
     logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
 
+def lastopp_innholdsoversikt_db(sti, fil):
+    oppdater_tabell_csv(
+        client, "navno_innholdsmengde.innhold_tidsserie", fil, sti
+    )
+    logging.info("Innholdsoversikt steg 6: Lastet opp til database")
+
 
 # %%
-
 
 def main():
     state, current = goalpost(client, mappe)
@@ -278,8 +280,9 @@ def main():
         df = forbered_innholdsoversikt_datasett()
         df = innholdsoversikt_kolonner(df)
         df = innholdsoversikt_datoer(df)
-        lastopp_innholdsoversikt_db(df)
+        innholdsoversikt_kategorisering(df, sti="/tmp/data.csv")
         lastopp_csv()
+        lastopp_innholdsoversikt_db(sti="/tmp/data.csv", fil="data.csv")
         logging.info("Naisjob er ferdig")
     elif state == True:
         logging.info(
