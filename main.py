@@ -7,12 +7,11 @@ import zipfile
 import logging
 
 import pandas as pd
-import numpy as np
-from google.cloud import bigquery
+from dotenv import load_dotenv
 
 from bygg_df import bygg_dataframe
 from enonic_data_api import eksport_innhold_enonic
-from bq_tabell_jobber import oppdater_tabell, skrivover_tabell, oppdater_tabell_csv
+from bq_tabell_jobber import oppdater_tabell_csv
 from gcs_api import last_opp_fil, hent_liste_blobs
 from get_url import url_parser
 
@@ -23,9 +22,11 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 # %%
+load_dotenv()
+
 DATA = ""
-client = os.environ["GCP_BQ_OPPDATERING_CREDS"]
-with open(os.environ["GCP_BQ_OPPDATERING_CREDS"], "r") as keys:
+client = os.getenv("GCP_BQ_OPPDATERING_CREDS")
+with open(os.getenv("GCP_BQ_OPPDATERING_CREDS"), "r") as keys:
     data = keys.read()
 obj = json.loads(data)
 project_id = obj["project_id"]
@@ -214,56 +215,6 @@ def innholdsoversikt_datoer(df):
 
 
 # %%
-def datasett_sideprodukt(df):
-    df_filtered = df.explode("produktType")
-    df_sideprodukt = df_filtered[["_id", "produktType", "dato"]]
-    df_sideprodukt["produktType"] = df_sideprodukt["produktType"].map(
-        {
-            "benefits": "pengestøtte",
-            "followup": "oppfølging",
-            "rights": "veiledning",
-            "measures": "tiltak",
-            "for_employers": "for arbeidsgivere",
-            "for_providers": "for samarbeidspartnere",
-        }
-    )
-    logging.info("Datasett %s er klart", df_sideprodukt)
-    return df_sideprodukt
-
-
-def datasett_produkt(df_sideprodukt):
-    uniques = list(filter(None, df_sideprodukt["produktType"].unique()))
-    df_produkt = pd.DataFrame(uniques, columns=["produktType"])
-    logging.info("Datasett %s er klart", df_produkt)
-    return df_produkt
-
-
-def datasett_sideomrade(df):
-    df_filtered = df.explode("omrade")
-    df_sideomrade = df_filtered[["_id", "omrade", "dato"]]
-
-    df_sideomrade["omrade"] = df_sideomrade["omrade"].map(
-        {
-            "social_counselling": "økonomisk sosialhjelp, råd og veiledning",
-            "family": "familie og barn",
-            "health": "helse og sykdom",
-            "work": "arbeid",
-            "accessibility": "hjelpemidler og tilrettelegging",
-            "pension": "pensjon",
-        }
-    )
-    logging.info("Datasett %s er klart", df_sideomrade)
-    return df_sideomrade
-
-
-def datasett_omrade(df_sideomrade):
-    uniques = list(filter(None, df_sideomrade["omrade"].unique()))
-    df_omrade = pd.DataFrame(uniques, columns=["omrade"])
-    logging.info("Datasett %s er klart", df_omrade)
-    return df_omrade
-
-
-# %%
 
 
 def lastopp_innholdsoversikt_db(df):
@@ -295,34 +246,6 @@ def lastopp_innholdsoversikt_db(df):
     }
     df["kategorier"] = df["innholdstype"].map(typer_sider)
     df.drop(columns=["produktType", "omrade"], inplace=True)
-    schema = [
-        bigquery.SchemaField("_id", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("status", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("innholdstype", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("createdTime", bigquery.enums.SqlTypeNames.DATE),
-        bigquery.SchemaField("modifiedTime", bigquery.enums.SqlTypeNames.DATE),
-        bigquery.SchemaField("url", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("dato", bigquery.enums.SqlTypeNames.DATE),
-        bigquery.SchemaField("kategorier", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("publishFirst", bigquery.enums.SqlTypeNames.DATE),
-        bigquery.SchemaField("publishFrom", bigquery.enums.SqlTypeNames.DATE),
-        bigquery.SchemaField("level_1", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("level_2", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("level_3", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("level_4", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("level_5", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("level_6", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("level_7", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("level_8", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("level_9", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("level_10", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("sidetittel", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("malgruppe", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("kortUrl", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("sprak", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("eier", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("forvaltetAv", bigquery.enums.SqlTypeNames.STRING),
-    ]
     df.to_csv("/tmp/data.csv", index=False)
     oppdater_tabell_csv(
         client, "navno_innholdsmengde.innhold_tidsserie", "data.csv", "/tmp/data.csv"
@@ -341,108 +264,6 @@ def lastopp_csv():
 
 
 # %%
-def lastopp_sideomrade(df_sideomrade):
-    schema = [
-        bigquery.SchemaField("_id", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("omrade", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("dato", bigquery.enums.SqlTypeNames.DATE),
-    ]
-    oppdater_tabell(df_sideomrade, client, "navno_innholdsmengde.side_omrade", schema)
-    logging.info("Oppdatert tabell om sideområdene")
-
-
-def lastopp_sideprodukt(df_sideprodukt):
-    schema = [
-        bigquery.SchemaField("_id", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("produktType", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("dato", bigquery.enums.SqlTypeNames.DATE),
-    ]
-    oppdater_tabell(df_sideprodukt, client, "navno_innholdsmengde.side_produkt", schema)
-    logging.info("Oppdatert tabell om sideproduktene")
-
-
-# %%
-def lastopp_omrade(df_omrade):
-    # nye områder
-    bq_client = bigquery.Client.from_service_account_info(obj)
-    result = bq_client.query("SELECT * FROM navno_innholdsmengde.omrade")
-    df_temp = result.to_dataframe()
-    df_temp.fillna(np.nan, inplace=True)
-    df_new = pd.concat([df_temp, df_omrade]).drop_duplicates()
-    schema = [bigquery.SchemaField("omrade", bigquery.enums.SqlTypeNames.STRING)]
-    skrivover_tabell(df_new, client, "navno_innholdsmengde.omrade", schema)
-    logging.info("Oppdatert tabell om områdene")
-
-
-def lastopp_produkt(df_omrade):
-    # nye produkter
-    bq_client = bigquery.Client.from_service_account_info(obj)
-    result = bq_client.query("SELECT * FROM navno_innholdsmengde.produkt")
-    df_temp = result.to_dataframe()
-    df_temp.fillna(np.nan, inplace=True)
-    df_new = pd.concat([df_temp, df_omrade]).drop_duplicates()
-    schema = [bigquery.SchemaField("produktType", bigquery.enums.SqlTypeNames.STRING)]
-    skrivover_tabell(df_new, client, "navno_innholdsmengde.produkt", schema)
-    logging.info("Oppdatert tabell om produktene")
-
-
-# %%
-def lastopp_innholdsmengde_total(df):
-    innholdsmengde = (
-        df.groupby(["innholdstype", "status"])
-        .agg({"_id": "count"})
-        .sort_values(by=["_id"], ascending=False)
-    )
-    innholdsmengde.reset_index(inplace=True)
-    innholdsmengde.rename(columns={"_id": "antall"}, inplace=True)
-    innholdsmengde["dato"] = pd.Series(
-        pd.date_range(
-            start="today", end="today", periods=len(innholdsmengde)
-        ).normalize()
-    )
-    innholdsmengde["datakilde"] = "enonic"
-    typer_sider = {
-        "no.nav.navno:situation-page": "side",
-        "no.nav.navno:dynamic-page": "side",
-        "no.nav.navno:content-page-with-sidemenus": "side",
-        "no.nav.navno:main-article": "side",
-        "no.nav.navno:section-page": "side",
-        "no.nav.navno:page-list": "side",
-        "no.nav.navno:transport-page": "side",
-        "no.nav.navno:office-information": "side",
-        "no.nav.navno:publishing-calendar": "side",
-        "no.nav.navno:large-table": "side",
-        "no.nav.navno:employer-situation-page": "side",
-        "no.nav.navno:guide-page": "side",
-        "no.nav.navno:front-page": "side",
-        "no.nav.navno:area-page": "side",
-        "no.nav.navno:main-article-chapter": "side",
-        "no.nav.navno:themed-article-page": "side",
-        "no.nav.navno:tools-page": "side",
-        "no.nav.navno:overview": "side",
-        "no.nav.navno:generic-page": "side",
-        "no.nav.navno:melding": "side",
-        "media:text": "vedlegg",
-        "media:document": "vedlegg",
-        "media:spreadsheet": "vedlegg",
-        "media:presentation": "vedlegg",
-    }
-    innholdsmengde["kategorier"] = innholdsmengde["innholdstype"].map(typer_sider)
-    schema = [
-        bigquery.SchemaField("status", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("innholdstype", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("antall", bigquery.enums.SqlTypeNames.INTEGER),
-        bigquery.SchemaField("dato", bigquery.enums.SqlTypeNames.DATE),
-        bigquery.SchemaField("datakilde", bigquery.enums.SqlTypeNames.STRING),
-        bigquery.SchemaField("kategorier", bigquery.enums.SqlTypeNames.STRING),
-    ]
-    oppdater_tabell(
-        innholdsmengde, client, "navno_innholdsmengde.innhold_aggregert", schema
-    )
-    logging.info("Lastet opp metrikker til gammel oversiktstabell")
-
-
-# %%
 
 
 def main():
@@ -457,17 +278,8 @@ def main():
         df = forbered_innholdsoversikt_datasett()
         df = innholdsoversikt_kolonner(df)
         df = innholdsoversikt_datoer(df)
-        df_sideprodukt = datasett_sideprodukt(df)
-        df_sideomrade = datasett_sideomrade(df)
-        df_produkt = datasett_produkt(df_sideprodukt)
-        df_omrade = datasett_omrade(df_sideomrade)
         lastopp_innholdsoversikt_db(df)
         lastopp_csv()
-        lastopp_sideomrade(df_sideomrade)
-        lastopp_sideprodukt(df_sideprodukt)
-        lastopp_omrade(df_omrade)
-        lastopp_produkt(df_omrade)
-        lastopp_innholdsmengde_total(df)
         logging.info("Naisjob er ferdig")
     elif state == True:
         logging.info(

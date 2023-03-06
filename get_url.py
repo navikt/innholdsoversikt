@@ -69,5 +69,4 @@ def url_parser(url):
         "directories": directories,
         "queries": queries,
     }
-    logging.info("Returning elements for the URL %s", url)
     return elements
