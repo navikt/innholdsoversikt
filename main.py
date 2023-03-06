@@ -256,24 +256,6 @@ def innholdsoversikt_kategorisering(df, sti):
 # %%
 
 
-def lastopp_csv():
-    last_opp_fil(
-        client=client,
-        bucket_name="enonic_data_csv",
-        source_file_name="/tmp/data.csv",
-        destination_blob_name=forbered_filsti("/tmp/data.csv"),
-    )
-    logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
-
-
-def lastopp_innholdsoversikt_db(sti, fil):
-    oppdater_tabell_csv(client, "navno_innholdsmengde.innhold_tidsserie", fil, sti)
-    logging.info("Innholdsoversikt steg 6: Lastet opp til database")
-
-
-# %%
-
-
 def main():
     state, current = goalpost(client, mappe)
     if state == False:
@@ -287,8 +269,20 @@ def main():
         df = innholdsoversikt_kolonner(df)
         df = innholdsoversikt_datoer(df)
         innholdsoversikt_kategorisering(df, sti="/tmp/data.csv")
-        lastopp_csv()
-        lastopp_innholdsoversikt_db(sti="/tmp/data.csv", fil="data.csv")
+        last_opp_fil(
+            client=client,
+            bucket_name="enonic_data_csv",
+            source_file_name="/tmp/data.csv",
+            destination_blob_name=forbered_filsti("/tmp/data.csv"),
+        )
+        logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
+        oppdater_tabell_csv(
+            client=client,
+            table_id="navno_innholdsmengde.innhold_tidsserie",
+            source_file="data.csv",
+            file_path="/tmp/data.csv",
+        )
+        logging.info("Innholdsoversikt steg 6: Lastet opp til database")
         logging.info("Naisjob er ferdig")
     elif state == True:
         logging.info(
