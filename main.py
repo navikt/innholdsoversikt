@@ -26,7 +26,7 @@ load_dotenv()
 
 DATA = ""
 client = os.getenv("GCP_BQ_OPPDATERING_CREDS")
-with open(os.getenv("GCP_BQ_OPPDATERING_CREDS"), "r") as keys:
+with open(client, "r") as keys:
     data = keys.read()
 obj = json.loads(data)
 project_id = obj["project_id"]
