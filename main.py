@@ -213,6 +213,7 @@ def innholdsoversikt_datoer(df):
     logging.info("Innholdsoversikt steg 3: Sett datoer")
     return df
 
+
 def innholdsoversikt_kategorisering(df, sti):
     """
     Kategoriserer innholdet og skriver csv til ønsket sti
@@ -246,9 +247,14 @@ def innholdsoversikt_kategorisering(df, sti):
     df["kategorier"] = df["innholdstype"].map(typer_sider)
     df.drop(columns=["produktType", "omrade"], inplace=True)
     df.to_csv(sti, index=False)
-    logging.info("Innholdsoversikt steg 4: innholdet er kategorisert og skrevet til csv ved %s", sti)
+    logging.info(
+        "Innholdsoversikt steg 4: innholdet er kategorisert og skrevet til csv ved %s",
+        sti,
+    )
+
 
 # %%
+
 
 def lastopp_csv():
     last_opp_fil(
@@ -259,14 +265,14 @@ def lastopp_csv():
     )
     logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
 
+
 def lastopp_innholdsoversikt_db(sti, fil):
-    oppdater_tabell_csv(
-        client, "navno_innholdsmengde.innhold_tidsserie", fil, sti
-    )
+    oppdater_tabell_csv(client, "navno_innholdsmengde.innhold_tidsserie", fil, sti)
     logging.info("Innholdsoversikt steg 6: Lastet opp til database")
 
 
 # %%
+
 
 def main():
     state, current = goalpost(client, mappe)
