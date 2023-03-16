@@ -36,6 +36,22 @@ dataset_id_backup = "navno_innholdsmengde_backup"
 mappe = "enonic_content_data"
 # %%
 def goalpost(client, mappe):
+    """
+    Checks if we have archived, unpublished and published content stored in the cloud
+
+    Parameters:
+    -----------
+    client: string, required
+        Our credentials to use cloud services
+    mappe: string, required
+        Our blob storage folder in the cloud 
+
+    Returns DATA and current:
+    -------------------------
+    DATA, bool is True if our folder contains the archived, unpublished and published content for today's date, otherwise returns False
+    
+    current is today's date in the format YYYYMMDD
+    """
     blobs = hent_liste_blobs(client, mappe)
     d = list(blobs)
     fil_urler = []
