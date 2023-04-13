@@ -169,7 +169,7 @@ def forbered_innholdsoversikt_datasett():
         for x in df_ark["_path"]
     ]
     df["_path"] = df["_path"].str.replace("/www", "https://www")
-    df["customPath"] = df["customPath"].str.replace(r"^\/", "https://www.nav.no/")
+    df["customPath"] = df["customPath"].str.replace(r"^\/", "https://www.nav.no/", regex=True)
     url_list = df["_path"].tolist()
     df_urls = pd.DataFrame([url_parser(i) for i in url_list])
     df_dirs = pd.DataFrame(
