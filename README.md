@@ -38,10 +38,13 @@ kubectl config use-context prod-gcp
 kubectl -npersonbruker get pods
 ```
 
-**Start og slutt pods**
-```
+**Se naisjobs i kubernetes**
 
 ```
+kubectl get naisjob -npersonbruker # viser naisjob i namespace
+kubectl describe naisjob innholdsoversikt-dashboard -npersonbruker # beskriver naisjob metadata
+```
+
 
 **Start og slutt naisjob manuelt**
 
