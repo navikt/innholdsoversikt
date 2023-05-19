@@ -5,6 +5,7 @@ import json
 import time
 import zipfile
 import logging
+import argparse
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -22,6 +23,38 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 # %%
+parser = argparse.ArgumentParser(
+    prog="innholdsoversikt",
+    description="tar uttrekk av innhold fra enonic og oppdaterer database i sky",
+    epilog="",
+    argument_default=argparse.SUPPRESS,
+)
+
+runner = parser.add_argument_group("Runner")
+runner.add_argument(
+    "db",
+    type=str,
+    choices=("test", "prod"),
+    default="test",
+    help="velg hvilken database som skal oppdateres",
+)
+runner.add_argument(
+    "dato",
+    type=str,
+    default="idag",
+    help="velg hvilken dato uttrekket gjelder for. Bruk formatet YYYYMMDD, eksempel 20230205 er for 5 februar 2023. default er %(default)s",
+)
+runner.add_argument(
+    "--skip_goalpost",
+    type=bool,
+    default=False,
+    help="velg om programmet skal hoppe over steget for å sjekke om vi har lagret data for gitt dato. True hopper over steget og programmet fortsetter. False er standardinnstilling."
+)
+
+args = parser.parse_args()
+database = args.db
+dato = args.dato
+# %%
 load_dotenv()
 
 DATA = ""
@@ -33,9 +66,14 @@ project_id = obj["project_id"]
 location = "europe-north1"
 dataset_id = "navno_innholdsmengde"
 dataset_id_backup = "navno_innholdsmengde_backup"
+table_backup = "innhold_tidsserie_backup"
+table_prod = "innhold_tidsserie"
+table_test = "innhold_tidsserie_test"
 mappe = "enonic_content_data"
+
+
 # %%
-def goalpost(client, mappe):
+def goalpost(client, mappe, skip_goalpost=False):
     """
     Checks if we have archived, unpublished and published content stored in the cloud
 
@@ -44,27 +82,31 @@ def goalpost(client, mappe):
     client: string, required
         Our credentials to use cloud services
     mappe: string, required
-        Our blob storage folder in the cloud 
+        Our blob storage folder in the cloud
 
     Returns DATA and current:
     -------------------------
     DATA, bool is True if our folder contains the archived, unpublished and published content for today's date, otherwise returns False
-    
+
     current is today's date in the format YYYYMMDD
     """
-    blobs = hent_liste_blobs(client, mappe)
-    d = list(blobs)
-    fil_urler = []
-    for i in d:
-        fil_urler.append(i.public_url)
-    current = time.strftime("%Y%m%d")
-    arkivert = [i for i in fil_urler if current in i and "tmp_enonic_arkivert" in i]
-    avpublisert = [
-        i for i in fil_urler if current in i and "tmp_enonic_avpublisert" in i
-    ]
-    publisert = [i for i in fil_urler if current in i and "tmp_enonic_publisert" in i]
-    if len(avpublisert) > 0 and len(publisert) > 0 and len(arkivert) > 0:
-        DATA = True
+    if dato == "idag":
+        current = time.strftime("%Y%m%d")
+    if skip_goalpost == False:
+        blobs = hent_liste_blobs(client, mappe)
+        d = list(blobs)
+        fil_urler = []
+        for i in d:
+            fil_urler.append(i.public_url)
+        arkivert = [i for i in fil_urler if current in i and "tmp_enonic_arkivert" in i]
+        avpublisert = [
+            i for i in fil_urler if current in i and "tmp_enonic_avpublisert" in i
+        ]
+        publisert = [i for i in fil_urler if current in i and "tmp_enonic_publisert" in i]
+        if len(avpublisert) > 0 and len(publisert) > 0 and len(arkivert) > 0:
+            DATA = True
+        else:
+            DATA = False
     else:
         DATA = False
     return DATA, current
@@ -169,7 +211,9 @@ def forbered_innholdsoversikt_datasett():
         for x in df_ark["_path"]
     ]
     df["_path"] = df["_path"].str.replace("/www", "https://www")
-    df["customPath"] = df["customPath"].str.replace(r"^\/", "https://www.nav.no/", regex=True)
+    df["customPath"] = df["customPath"].str.replace(
+        r"^\/", "https://www.nav.no/", regex=True
+    )
     url_list = df["_path"].tolist()
     df_urls = pd.DataFrame([url_parser(i) for i in url_list])
     df_dirs = pd.DataFrame(
