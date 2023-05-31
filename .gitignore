@@ -1,5 +1,7 @@
 data/
+.vscode/
 __pycache__/
+venv*
 .env
 secrets.json
 .DS_Store
