@@ -218,13 +218,13 @@ def innholdsoversikt_datoer(df):
     df["dato"] = pd.Series(
         pd.date_range(start="today", end="today", periods=len(df)).normalize()
     )
-    df["createdTime"] = pd.to_datetime(df["createdTime"])
+    df["createdTime"] = pd.to_datetime(df["createdTime"], format="ISO8601")
     df["createdTime"] = df["createdTime"].dt.date
-    df["modifiedTime"] = pd.to_datetime(df["modifiedTime"])
+    df["modifiedTime"] = pd.to_datetime(df["modifiedTime"], format="ISO8601")
     df["modifiedTime"] = df["modifiedTime"].dt.date
-    df["publishFirst"] = pd.to_datetime(df["publishFirst"])
+    df["publishFirst"] = pd.to_datetime(df["publishFirst"], format="ISO8601")
     df["publishFirst"] = df["publishFirst"].dt.date
-    df["publishFrom"] = pd.to_datetime(df["publishFrom"])
+    df["publishFrom"] = pd.to_datetime(df["publishFrom"], format="ISO8601")
     df["publishFrom"] = df["publishFrom"].dt.date
     logging.info("Innholdsoversikt steg 3: Sett datoer")
     return df
