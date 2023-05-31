@@ -218,13 +218,13 @@ def innholdsoversikt_datoer(df):
     df["dato"] = pd.Series(
         pd.date_range(start="today", end="today", periods=len(df)).normalize()
     )
-    df["createdTime"] = pd.to_datetime(df["createdTime"])
+    df["createdTime"] = pd.to_datetime(df["createdTime"], format="ISO8601")
     df["createdTime"] = df["createdTime"].dt.date
-    df["modifiedTime"] = pd.to_datetime(df["modifiedTime"])
+    df["modifiedTime"] = pd.to_datetime(df["modifiedTime"], format="ISO8601")
     df["modifiedTime"] = df["modifiedTime"].dt.date
-    df["publishFirst"] = pd.to_datetime(df["publishFirst"])
+    df["publishFirst"] = pd.to_datetime(df["publishFirst"], format="ISO8601")
     df["publishFirst"] = df["publishFirst"].dt.date
-    df["publishFrom"] = pd.to_datetime(df["publishFrom"])
+    df["publishFrom"] = pd.to_datetime(df["publishFrom"], format="ISO8601")
     df["publishFrom"] = df["publishFrom"].dt.date
     logging.info("Innholdsoversikt steg 3: Sett datoer")
     return df
@@ -278,9 +278,9 @@ def main():
         logging.info(
             "Vi har ikke data for %s. Fortsetter naisjob. Flagget er %s", current, state
         )
-        eksport_arkivert()
-        eksport_avpublisert()
-        eksport_publisert()
+        # eksport_arkivert()
+        # eksport_avpublisert()
+        # eksport_publisert()
         df = forbered_innholdsoversikt_datasett()
         df = innholdsoversikt_kolonner(df)
         df = innholdsoversikt_datoer(df)
@@ -294,7 +294,7 @@ def main():
         logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
             client=client,
-            table_id="navno_innholdsmengde.innhold_tidsserie",
+            table_id="navno_innholdsmengde.innhold_tidsserie_test",
             source_file="data.csv",
             file_path="/tmp/data.csv",
         )
