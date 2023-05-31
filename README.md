@@ -59,8 +59,7 @@ kubectl delete naisjob innholdsoversikt-dashboard -npersonbruker
 ```
 kubectl config use-context dev-gcp
 kubectl config use-context prod-gcp
-kubectl -npersonbruker create secret generic 
-innholdsmengde-dashboard-secrets --from-file=secrets.json
+kubectl -npersonbruker create secret generic innholdsmengde-dashboard-secrets --from-file=secrets.json
 kubectl -npersonbruker get secret 
 kubectl -npersonbruker describe secrets/innholdsmengde-dashboard-secrets
 kubectl -npersonbruker delete secret innholdsmengde-dashboard-secrets
