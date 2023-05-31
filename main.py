@@ -278,23 +278,23 @@ def main():
         logging.info(
             "Vi har ikke data for %s. Fortsetter naisjob. Flagget er %s", current, state
         )
-        # eksport_arkivert()
-        # eksport_avpublisert()
-        # eksport_publisert()
+        eksport_arkivert()
+        eksport_avpublisert()
+        eksport_publisert()
         df = forbered_innholdsoversikt_datasett()
         df = innholdsoversikt_kolonner(df)
         df = innholdsoversikt_datoer(df)
         innholdsoversikt_kategorisering(df, sti="/tmp/data.csv")
-        # last_opp_fil(
-        #     client=client,
-        #     bucket_name="enonic_data_csv",
-        #     source_file_name="/tmp/data.csv",
-        #     destination_blob_name=forbered_filsti("/tmp/data.csv"),
-        # )
-        # logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
+        last_opp_fil(
+            client=client,
+            bucket_name="enonic_data_csv",
+            source_file_name="/tmp/data.csv",
+            destination_blob_name=forbered_filsti("/tmp/data.csv"),
+        )
+        logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
             client=client,
-            table_id="navno_innholdsmengde.innhold_tidsserie_test",
+            table_id="navno_innholdsmengde.innhold_tidsserie",
             source_file="data.csv",
             file_path="/tmp/data.csv",
         )
