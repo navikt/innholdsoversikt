@@ -2,7 +2,7 @@ FROM python:3.9-slim-buster AS compile-image
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 COPY ["requirements/main.txt", "./"]
-RUN pip install --no-cache-dir -r requirements/main.txt
+RUN pip install --no-cache-dir -r main.txt
 
 FROM python:3.9-slim-buster AS build-image
 RUN groupadd -g 999 python && \
