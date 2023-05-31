@@ -17,14 +17,13 @@ Kibana](https://logs.adeo.no/goto/6eac7c60-4a6a-11ed-8607-d590fd125f80).
 
 **Jobb lokalt**
 
-Bruk pyenv for å håndtere python-versjoner og poetry for versjonering av 
-avhengigheter. 
+Bruk venv for å starte det virtuelle miljøet, og pip og pip-tools for versjonering av 
+avhengigheter.
 
 ```
 cd innholdsoversikt
-poetry shell # starter virtuelt  miljø
-poetry export -f requirements.txt --output requirements.txt 
---without-hashes # oppdater avhengigheter
+source venv/bin/activate # starter virtuelt  miljø
+make update-deps # oppdater avhengigheter
 ```
 
 [Enonic data api](enonic_data_api.py) eksporterer innhold fra Enonic XP 
