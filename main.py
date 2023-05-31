@@ -285,13 +285,13 @@ def main():
         df = innholdsoversikt_kolonner(df)
         df = innholdsoversikt_datoer(df)
         innholdsoversikt_kategorisering(df, sti="/tmp/data.csv")
-        last_opp_fil(
-            client=client,
-            bucket_name="enonic_data_csv",
-            source_file_name="/tmp/data.csv",
-            destination_blob_name=forbered_filsti("/tmp/data.csv"),
-        )
-        logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
+        # last_opp_fil(
+        #     client=client,
+        #     bucket_name="enonic_data_csv",
+        #     source_file_name="/tmp/data.csv",
+        #     destination_blob_name=forbered_filsti("/tmp/data.csv"),
+        # )
+        # logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
             client=client,
             table_id="navno_innholdsmengde.innhold_tidsserie_test",
