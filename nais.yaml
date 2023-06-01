@@ -8,9 +8,8 @@ metadata:
 spec:
   accessPolicy:
     outbound:
-      rules:
-      - application: nav-enonicxp-dataquery
-        cluster: prod-gcp
+      external:
+        - host: nav-enonicxp-dataquery.intern.nav.no
   image: {{ image }}
   schedule: '0 6 1 * *'
   webproxy: true
