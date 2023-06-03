@@ -1,0 +1,157 @@
+[
+    {
+        "name": "_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "innholdstype",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "createdTime",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "modifiedTime",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "publishFirst",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "publishFrom",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "url",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "sidetittel",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "eier",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "forvaltetAv",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "malgruppe",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "kortUrl",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "sprak",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "status",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "level_1",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "level_2",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "level_3",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "level_4",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },{
+        "name": "level_5",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "level_6",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "level_7",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "level_8",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "level_9",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "level_10",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "dato",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": ""
+    },
+    {
+        "name": "kategorier",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": ""
+    }
+]
