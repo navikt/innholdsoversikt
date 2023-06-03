@@ -12,6 +12,8 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
+
+
 # %%
 def get_url_from_sitemap(url: str) -> pd.DataFrame:
     """
