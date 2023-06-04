@@ -7,7 +7,7 @@ Dette er vår cronjob-app på NAIS for å skaffe oversikt over innholdet vårt p
 dashboard](https://metabase.intern.nav.no/dashboard/11-innholdsoversikt-pa-nav-no) 
 der vi følger med på innholdsmengde over tid.
 
-[main](main.py) trekker ut innholdet vårt fra CMSet Enonic XP og lager 
+[main](/innholdsoversikt/main.py) trekker ut innholdet vårt fra CMSet Enonic XP og lager 
 aggregert statistikk på metadata som mengden publisert og avpublisert 
 innhold, innholdsmengde, alder og fordeling på områdene på `nav.no`.
 
@@ -17,8 +17,7 @@ Kibana](https://logs.adeo.no/goto/6eac7c60-4a6a-11ed-8607-d590fd125f80).
 
 **Jobb lokalt**
 
-Bruk venv for å starte det virtuelle miljøet, og pip og pip-tools for versjonering av 
-avhengigheter.
+Bruk venv for å starte det virtuelle miljøet, og pip for avhengigheter. Installér avhengigheter med `make install`.
 
 ```
 cd innholdsoversikt
@@ -26,7 +25,7 @@ source venv/bin/activate # starter virtuelt  miljø
 make update-deps # oppdater avhengigheter
 ```
 
-[Enonic data api](enonic_data_api.py) eksporterer innhold fra Enonic XP 
+[Enonic data api](/innholdsoversikt/enonic_data_api.py) eksporterer innhold fra Enonic XP 
 via [dataquery APIet](https://github.com/navikt/nav-enonicxp-dataquery).
 
 **Se pods i kubernetes**
