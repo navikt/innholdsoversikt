@@ -13,6 +13,8 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
+
+
 # %%
 def eksport_innhold_enonic(branch, query, types, fields, filnavn):
     """

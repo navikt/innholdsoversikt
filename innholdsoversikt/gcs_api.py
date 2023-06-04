@@ -9,6 +9,8 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
+
+
 # %%
 def opprett_mappe(client, bucket_name, location, storage_class):
     """

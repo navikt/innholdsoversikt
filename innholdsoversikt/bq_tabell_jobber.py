@@ -2,6 +2,7 @@
 import logging
 
 from google.cloud import bigquery
+from google.api_core.exceptions import BadRequest
 
 logging.getLogger(__name__)
 logging.basicConfig(
@@ -9,6 +10,8 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
+
+
 # %%
 def oppdater_tabell(df, client, table_id, schema):
     """
@@ -34,7 +37,11 @@ def oppdater_tabell(df, client, table_id, schema):
         schema=schema, write_disposition=bigquery.WriteDisposition.WRITE_APPEND
     )
     job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
-    job.result()
+    try:
+        job.result()
+    except BadRequest:
+        for error in job.errors:
+            print(error["message"])
 
     table = client.get_table(table_id)
     logging.info(
@@ -200,8 +207,8 @@ def legg_til_felt(client, table_id, schema):
     return table.schema
 
 
-#%%
-def oppdater_tabell_csv(client, table_id, source_file, file_path):
+# %%
+def oppdater_tabell_csv(client, table_id, source_file, file_path, schema_path):
     """
     Oppdaterer en bigquery tabell med en csv-fil.
 
@@ -220,11 +227,19 @@ def oppdater_tabell_csv(client, table_id, source_file, file_path):
     """
     client = bigquery.Client.from_service_account_json(client)
     job_config = bigquery.LoadJobConfig(
-        source_format=bigquery.SourceFormat.CSV, skip_leading_rows=1, autodetect=True
+        schema=client.schema_from_json(schema_path),
+        source_format=bigquery.SourceFormat.CSV,
+        skip_leading_rows=1,
+        autodetect=False,
     )
     with open(file_path, "rb") as source_file:
         job = client.load_table_from_file(source_file, table_id, job_config=job_config)
-    job.result()
+    try:
+        job.result()
+    except BadRequest:
+        for error in job.errors:
+            print(error["message"])
+
     table = client.get_table(table_id)
     logging.info(
         "Lastet %s rader og %s kolonner til %s",

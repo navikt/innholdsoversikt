@@ -34,6 +34,8 @@ location = "europe-north1"
 dataset_id = "navno_innholdsmengde"
 dataset_id_backup = "navno_innholdsmengde_backup"
 mappe = "enonic_content_data"
+
+
 # %%
 def goalpost(client, mappe):
     """
@@ -44,12 +46,12 @@ def goalpost(client, mappe):
     client: string, required
         Our credentials to use cloud services
     mappe: string, required
-        Our blob storage folder in the cloud 
+        Our blob storage folder in the cloud
 
     Returns DATA and current:
     -------------------------
     DATA, bool is True if our folder contains the archived, unpublished and published content for today's date, otherwise returns False
-    
+
     current is today's date in the format YYYYMMDD
     """
     blobs = hent_liste_blobs(client, mappe)
@@ -169,7 +171,9 @@ def forbered_innholdsoversikt_datasett():
         for x in df_ark["_path"]
     ]
     df["_path"] = df["_path"].str.replace("/www", "https://www")
-    df["customPath"] = df["customPath"].str.replace(r"^\/", "https://www.nav.no/", regex=True)
+    df["customPath"] = df["customPath"].str.replace(
+        r"^\/", "https://www.nav.no/", regex=True
+    )
     url_list = df["_path"].tolist()
     df_urls = pd.DataFrame([url_parser(i) for i in url_list])
     df_dirs = pd.DataFrame(
@@ -234,33 +238,7 @@ def innholdsoversikt_kategorisering(df, sti):
     """
     Kategoriserer innholdet og skriver csv til ønsket sti
     """
-    typer_sider = {
-        "no.nav.navno:situation-page": "side",
-        "no.nav.navno:dynamic-page": "side",
-        "no.nav.navno:content-page-with-sidemenus": "side",
-        "no.nav.navno:main-article": "side",
-        "no.nav.navno:section-page": "side",
-        "no.nav.navno:page-list": "side",
-        "no.nav.navno:transport-page": "side",
-        "no.nav.navno:office-information": "side",
-        "no.nav.navno:publishing-calendar": "side",
-        "no.nav.navno:large-table": "side",
-        "no.nav.navno:employer-situation-page": "side",
-        "no.nav.navno:guide-page": "side",
-        "no.nav.navno:front-page": "side",
-        "no.nav.navno:area-page": "side",
-        "no.nav.navno:main-article-chapter": "side",
-        "no.nav.navno:themed-article-page": "side",
-        "no.nav.navno:tools-page": "side",
-        "no.nav.navno:overview": "side",
-        "no.nav.navno:generic-page": "side",
-        "no.nav.navno:melding": "side",
-        "media:text": "vedlegg",
-        "media:document": "vedlegg",
-        "media:spreadsheet": "vedlegg",
-        "media:presentation": "vedlegg",
-    }
-    df["kategorier"] = df["innholdstype"].map(typer_sider)
+    df["kategorier"] = ["vedlegg" if y.startswith("media") else "side" for y in df["innholdstype"]]
     df.drop(columns=["produktType", "omrade"], inplace=True)
     df.to_csv(sti, index=False)
     logging.info(
@@ -294,9 +272,10 @@ def main():
         logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
             client=client,
-            table_id="navno_innholdsmengde.innhold_tidsserie",
+            table_id="navno_innholdsmengde.innhold_tidsserie_test",
             source_file="data.csv",
             file_path="/tmp/data.csv",
+            schema_path="schema_tabell.json",
         )
         logging.info("Innholdsoversikt steg 6: Lastet opp til database")
         logging.info("Naisjob er ferdig")
@@ -309,3 +288,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# %%
