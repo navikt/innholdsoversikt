@@ -238,7 +238,9 @@ def innholdsoversikt_kategorisering(df, sti):
     """
     Kategoriserer innholdet og skriver csv til ønsket sti
     """
-    df["kategorier"] = ["vedlegg" if y.startswith("media") else "side" for y in df["innholdstype"]]
+    df["kategorier"] = [
+        "vedlegg" if y.startswith("media") else "side" for y in df["innholdstype"]
+    ]
     df.drop(columns=["produktType", "omrade"], inplace=True)
     df.to_csv(sti, index=False)
     logging.info(
