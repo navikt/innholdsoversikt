@@ -12,7 +12,7 @@ RUN groupadd -g 999 python && \
 USER 999
 WORKDIR /app
 COPY --chown=python:python --from=compile-image /opt/venv /opt/venv
-COPY /innholdsoversikt .
+COPY /src/innholdsoversikt .
 USER 999
 ENV PATH="/opt/venv/bin:$PATH"
 ENV GCP_BQ_OPPDATERING_CREDS=secrets.json

@@ -238,7 +238,9 @@ def innholdsoversikt_kategorisering(df, sti):
     """
     Kategoriserer innholdet og skriver csv til ønsket sti
     """
-    df["kategorier"] = ["vedlegg" if y.startswith("media") else "side" for y in df["innholdstype"]]
+    df["kategorier"] = [
+        "vedlegg" if y.startswith("media") else "side" for y in df["innholdstype"]
+    ]
     df.drop(columns=["produktType", "omrade"], inplace=True)
     df.to_csv(sti, index=False)
     logging.info(
@@ -272,7 +274,7 @@ def main():
         logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
             client=client,
-            table_id="navno_innholdsmengde.innhold_tidsserie",
+            table_id="navno_innholdsmengde.innhold_tidsserie_test",
             source_file="data.csv",
             file_path="/tmp/data.csv",
             schema_path="schema_tabell.json",
