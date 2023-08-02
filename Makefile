@@ -17,13 +17,3 @@ update: update-deps init
 
 format:
 	black --exclude ^/venv .
-
-build:
-	rm -rf dist/
-	python3.10 -m build
-
-pypi_publish:
-	python3.10 -m twine upload --repository pypi dist/*
-
-testpypi_publish:
-	python3.10 -m twine upload --repository testpypi dist/*
