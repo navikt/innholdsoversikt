@@ -1,0 +1,40 @@
+[project]
+name = "innholdsoversikt"
+version = "0.1.0"
+description = "cronjob for å samle oversikt over innhold på nav.no"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+
+dependencies = [
+    "requests",
+    "pandas",
+    "xmltodict",
+    "tqdm",
+    "google-cloud-bigquery",
+    "google-cloud-storage",
+    "pyarrow",
+    "python-dotenv"
+]
+
+[project.optional-dependencies]
+dev = [
+    "ipykernel",
+    "black",
+    "openpyxl"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/navikt/innholdsoversikt"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests", "testing"]
+
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
