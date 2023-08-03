@@ -7,7 +7,7 @@ Dette er vår cronjob-app på NAIS for å skaffe oversikt over innholdet vårt p
 dashboard](https://metabase.intern.nav.no/dashboard/11-innholdsoversikt-pa-nav-no) 
 der vi følger med på innholdsmengde over tid.
 
-[main](/innholdsoversikt/main.py) trekker ut innholdet vårt fra CMSet Enonic XP og lager 
+[main](/src/innholdsoversikt/main.py) trekker ut innholdet vårt fra CMSet Enonic XP og lager 
 aggregert statistikk på metadata som mengden publisert og avpublisert 
 innhold, innholdsmengde, alder og fordeling på områdene på `nav.no`.
 
@@ -25,7 +25,7 @@ source venv/bin/activate # starter virtuelt  miljø
 make update-deps # oppdater avhengigheter
 ```
 
-[Enonic data api](/innholdsoversikt/enonic_data_api.py) eksporterer innhold fra Enonic XP 
+[Enonic data api](/src/innholdsoversikt/enonic_data_api.py) eksporterer innhold fra Enonic XP 
 via [dataquery APIet](https://github.com/navikt/nav-enonicxp-dataquery).
 
 **Se pods i kubernetes**
