@@ -1,4 +1,4 @@
 .git
 .DS_Store
 data/
-__pycache__/
+/src/innholdsoversikt/__pycache__
