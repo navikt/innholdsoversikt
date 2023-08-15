@@ -9,11 +9,9 @@ license = {file = "LICENSE"}
 dependencies = [
     "requests",
     "pandas",
-    "xmltodict",
     "tqdm",
     "google-cloud-bigquery",
     "google-cloud-storage",
-    "pyarrow",
     "python-dotenv"
 ]
 
