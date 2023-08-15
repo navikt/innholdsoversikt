@@ -38,12 +38,12 @@ googleapis-common-protos==1.60.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.56.2
+grpcio==1.57.0
     # via
     #   google-api-core
     #   google-cloud-bigquery
     #   grpcio-status
-grpcio-status==1.56.2
+grpcio-status==1.57.0
     # via google-api-core
 idna==3.4
     # via requests
@@ -57,7 +57,7 @@ pandas==2.0.3
     # via innholdsoversikt (pyproject.toml)
 proto-plus==1.22.3
     # via google-cloud-bigquery
-protobuf==4.23.4
+protobuf==4.24.0
     # via
     #   google-api-core
     #   google-cloud-bigquery
@@ -92,7 +92,7 @@ six==1.16.0
     # via
     #   google-auth
     #   python-dateutil
-tqdm==4.65.0
+tqdm==4.66.1
     # via innholdsoversikt (pyproject.toml)
 tzdata==2023.3
     # via pandas
