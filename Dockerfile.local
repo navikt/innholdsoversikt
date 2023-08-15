@@ -1,10 +1,10 @@
 FROM python:3.10-slim-buster AS compile-image
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+RUN python -m venv $VIRTUAL_ENV
 WORKDIR /app
 COPY ["requirements/main.txt", "main.txt"]
-RUN . /opt/venv/bin/activate && pip install --upgrade pip 
-RUN . /opt/venv/bin/activate && pip install --no-cache-dir -r main.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r main.txt
 
 FROM python:3.10-slim-buster AS build-image
 RUN groupadd -g 999 python && \
@@ -14,6 +14,7 @@ WORKDIR /app
 COPY --chown=python:python --from=compile-image /opt/venv /opt/venv
 COPY /src/innholdsoversikt .
 USER 999
-ENV PATH="/opt/venv/bin:$PATH"
+ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV GCP_BQ_OPPDATERING_CREDS=secrets.json
-CMD . /opt/venv/bin/activate && exec python main.py
+CMD exec python main.py
