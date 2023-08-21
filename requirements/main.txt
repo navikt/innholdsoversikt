@@ -48,9 +48,7 @@ grpcio-status==1.57.0
 idna==3.4
     # via requests
 numpy==1.25.2
-    # via
-    #   pandas
-    #   pyarrow
+    # via pandas
 packaging==23.1
     # via google-cloud-bigquery
 pandas==2.0.3
@@ -64,8 +62,6 @@ protobuf==4.24.0
     #   googleapis-common-protos
     #   grpcio-status
     #   proto-plus
-pyarrow==12.0.1
-    # via innholdsoversikt (pyproject.toml)
 pyasn1==0.5.0
     # via
     #   pyasn1-modules
@@ -100,5 +96,3 @@ urllib3==1.26.16
     # via
     #   google-auth
     #   requests
-xmltodict==0.13.0
-    # via innholdsoversikt (pyproject.toml)
