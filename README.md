@@ -72,3 +72,27 @@ docker build -f Dockerfile.local -t innholdsmengde_local .
 
 docker run --rm -it innholdsmengde_local /bin/bash
 ```
+
+**Spørringer i databasen**
+
+Bigquery har [sin egen syntaks](https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax) for SQL spørringer. Bruk kopitabellen for å teste spørringer.
+
+Det går an å [kjøre spørringer regelmessig](https://cloud.google.com/bigquery/docs/scheduling-queries#setting_up_a_scheduled_query), f.eks ukentlig.
+
+Velg rader for en gitt dato, med et utvalg på 1000
+
+```SQL
+SELECT * FROM `project-id.dataset.table` WHERE dato = '2023-08-21'LIMIT 1000
+```
+
+Velg samme data uten begrenset utvalg
+
+```SQL
+SELECT * FROM `project-id.dataset.table` WHERE dato = '2023-08-21'
+```
+
+Slett rader for en gitt dato
+
+```SQL
+DELETE FROM `project-id.dataset.table` WHERE dato = '2023-08-21'
+```
