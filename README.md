@@ -17,12 +17,14 @@ Kibana](https://logs.adeo.no/goto/6eac7c60-4a6a-11ed-8607-d590fd125f80).
 
 **Jobb lokalt**
 
-Bruk venv for å starte det virtuelle miljøet, og pip for avhengigheter. Installér avhengigheter med `make install`.
+Bruk venv for å lage og starte det virtuelle miljøet, og pip for avhengigheter. Installér avhengigheter med `make install`.
 
 ```
 cd innholdsoversikt
 source venv/bin/activate # starter virtuelt  miljø
+make install # installerer avhengigheter
 make update-deps # oppdater avhengigheter
+make format # formaterer python-kode med black
 ```
 
 [Enonic data api](/src/innholdsoversikt/enonic_data_api.py) eksporterer innhold fra Enonic XP 
