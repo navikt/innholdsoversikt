@@ -19,3 +19,15 @@ update: update-deps init
 
 format:
 	black --exclude ^/venv .
+
+start-docker-colima:
+	colima start
+
+stop-docker-colima:
+	colima stop
+
+build-image:
+	docker build -f Dockerfile -t innholdsmengde .
+
+build-local-image:
+	docker build -f Dockerfile.local -t innholdsmengde_local .
