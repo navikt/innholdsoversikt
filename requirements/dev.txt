@@ -8,7 +8,7 @@ appnope==0.1.4
     # via ipykernel
 asttokens==2.4.1
     # via stack-data
-black==24.2.0
+black==24.3.0
     # via innholdsoversikt (pyproject.toml)
 cachetools==5.3.3
     # via google-auth
@@ -18,7 +18,7 @@ charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via black
-comm==0.2.1
+comm==0.2.2
     # via ipykernel
 debugpy==1.8.1
     # via ipykernel
@@ -30,23 +30,24 @@ exceptiongroup==1.2.0
     # via ipython
 executing==2.0.1
     # via stack-data
-google-api-core==2.17.1
+google-api-core[grpc]==2.18.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.28.1
+google-auth==2.29.0
     # via
     #   google-api-core
+    #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-cloud-bigquery==3.17.2
+google-cloud-bigquery==3.20.1
     # via innholdsoversikt (pyproject.toml)
 google-cloud-core==2.4.1
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==2.14.0
+google-cloud-storage==2.16.0
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.5.0
     # via
@@ -56,19 +57,27 @@ google-resumable-media==2.7.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-googleapis-common-protos==1.62.0
+googleapis-common-protos==1.63.0
+    # via
+    #   google-api-core
+    #   grpcio-status
+grpcio==1.62.1
+    # via
+    #   google-api-core
+    #   grpcio-status
+grpcio-status==1.62.1
     # via google-api-core
 idna==3.6
     # via requests
-ipykernel==6.29.3
+ipykernel==6.29.4
     # via innholdsoversikt (pyproject.toml)
-ipython==8.22.1
+ipython==8.23.0
     # via ipykernel
 jedi==0.19.1
     # via ipython
-jupyter-client==8.6.0
+jupyter-client==8.6.1
     # via ipykernel
-jupyter-core==5.7.1
+jupyter-core==5.7.2
     # via
     #   ipykernel
     #   jupyter-client
@@ -84,7 +93,7 @@ numpy==1.26.4
     # via pandas
 openpyxl==3.1.2
     # via innholdsoversikt (pyproject.toml)
-packaging==23.2
+packaging==24.0
     # via
     #   black
     #   google-cloud-bigquery
@@ -103,25 +112,29 @@ platformdirs==4.2.0
     #   jupyter-core
 prompt-toolkit==3.0.43
     # via ipython
+proto-plus==1.23.0
+    # via google-api-core
 protobuf==4.25.3
     # via
     #   google-api-core
     #   googleapis-common-protos
+    #   grpcio-status
+    #   proto-plus
 psutil==5.9.8
     # via ipykernel
 ptyprocess==0.7.0
     # via pexpect
 pure-eval==0.2.2
     # via stack-data
-pyasn1==0.5.1
+pyasn1==0.6.0
     # via
     #   pyasn1-modules
     #   rsa
-pyasn1-modules==0.3.0
+pyasn1-modules==0.4.0
     # via google-auth
 pygments==2.17.2
     # via ipython
-python-dateutil==2.9.0
+python-dateutil==2.9.0.post0
     # via
     #   google-cloud-bigquery
     #   jupyter-client
@@ -156,7 +169,7 @@ tornado==6.4
     #   jupyter-client
 tqdm==4.66.2
     # via innholdsoversikt (pyproject.toml)
-traitlets==5.14.1
+traitlets==5.14.2
     # via
     #   comm
     #   ipykernel
@@ -165,7 +178,9 @@ traitlets==5.14.1
     #   jupyter-core
     #   matplotlib-inline
 typing-extensions==4.10.0
-    # via black
+    # via
+    #   black
+    #   ipython
 tzdata==2024.1
     # via pandas
 urllib3==2.2.1
