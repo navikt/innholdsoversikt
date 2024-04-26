@@ -21,7 +21,7 @@ google-auth==2.29.0
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-cloud-bigquery==3.20.1
+google-cloud-bigquery==3.21.0
     # via innholdsoversikt (pyproject.toml)
 google-cloud-core==2.4.1
     # via
@@ -41,19 +41,19 @@ googleapis-common-protos==1.63.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.62.1
+grpcio==1.62.2
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.62.1
+grpcio-status==1.62.2
     # via google-api-core
-idna==3.6
+idna==3.7
     # via requests
 numpy==1.26.4
     # via pandas
 packaging==24.0
     # via google-cloud-bigquery
-pandas==2.2.1
+pandas==2.2.2
     # via innholdsoversikt (pyproject.toml)
 proto-plus==1.23.0
     # via google-api-core
