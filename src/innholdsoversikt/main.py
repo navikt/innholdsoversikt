@@ -24,7 +24,6 @@ logging.basicConfig(
 # %%
 load_dotenv()
 
-DATA = ""
 client = os.getenv("GCP_BQ_OPPDATERING_CREDS")
 with open(client, "r") as keys:
     data = keys.read()
@@ -37,7 +36,7 @@ mappe = "enonic_content_data"
 
 
 # %%
-def goalpost(client: str, mappe: str) -> tuple[bool, str]:
+def goalpost(client: str, bucket_name: str) -> tuple[bool, str]:
     """
     Checks if we have archived, unpublished and published content stored in the cloud
 
@@ -45,16 +44,16 @@ def goalpost(client: str, mappe: str) -> tuple[bool, str]:
     -----------
     client: string, required
         Our credentials to use cloud services
-    mappe: string, required
+    bucket_name: string, required
         Our blob storage folder in the cloud
 
-    Returns DATA and current:
+    Returns:
     -------------------------
-    DATA, bool is True if our folder contains the archived, unpublished and published content for today's date, otherwise returns False
+    got_data, bool is True if our folder contains the archived, unpublished and published content for today's date, otherwise returns False
 
     current is today's date in the format YYYYMMDD
     """
-    blobs = hent_liste_blobs(client, mappe)
+    blobs = hent_liste_blobs(client=client, bucket_name=bucket_name)
     d = list(blobs)
     fil_urler = []
     for i in d:
@@ -66,10 +65,10 @@ def goalpost(client: str, mappe: str) -> tuple[bool, str]:
     ]
     publisert = [i for i in fil_urler if current in i and "tmp_enonic_publisert" in i]
     if len(avpublisert) > 0 and len(publisert) > 0 and len(arkivert) > 0:
-        DATA = True
+        got_data = True
     else:
-        DATA = False
-    return DATA, current
+        got_data = False
+    return got_data, current
 
 
 # %%
@@ -256,7 +255,7 @@ def innholdsoversikt_kategorisering(df: pd.DataFrame, sti: str):
 
 
 def main():
-    state, current = goalpost(client, mappe)
+    state, current = goalpost(client=client, bucket_name=mappe)
     if state == False:
         logging.info(
             "Vi har ikke data for %s. Fortsetter naisjob. Flagget er %s", current, state
