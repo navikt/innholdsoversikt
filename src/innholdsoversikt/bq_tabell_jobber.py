@@ -14,7 +14,9 @@ logging.basicConfig(
 
 
 # %%
-def oppdater_tabell(df: pd.DataFrame, client: str, table_id: str, json_schema_path: str):
+def oppdater_tabell(
+    df: pd.DataFrame, client: str, table_id: str, json_schema_path: str
+):
     """
     Oppdatér datasett med append
     Les også https://cloud.google.com/bigquery/docs/samples/bigquery-load-table-dataframe
@@ -29,7 +31,7 @@ def oppdater_tabell(df: pd.DataFrame, client: str, table_id: str, json_schema_pa
         ID for tabellen i bigquery som du ønsker å oppdatere med din DataFrame
     json_schema_path: str, påkrevd
         Sti til JSON schema for tabellen
-    
+
     Returnerer
     ----------
     table: tabell med metadata fra bigquery
@@ -57,7 +59,9 @@ def oppdater_tabell(df: pd.DataFrame, client: str, table_id: str, json_schema_pa
 
 
 # %%
-def skrivover_tabell(df: pd.DataFrame, client: str, table_id: str, json_schema_path: str):
+def skrivover_tabell(
+    df: pd.DataFrame, client: str, table_id: str, json_schema_path: str
+):
     """
     Skriv over hele datasettet med en dataframe
     Les også https://cloud.google.com/bigquery/docs/samples/bigquery-load-table-dataframe
@@ -72,7 +76,7 @@ def skrivover_tabell(df: pd.DataFrame, client: str, table_id: str, json_schema_p
         ID for tabellen i bigquery som du ønsker å skrive over med din DataFrame
     json_schema_path: str, påkrevd
         Sti til JSON schema for tabellen
-    
+
     Returnerer
     ----------
     table: tabell med metadata fra bigquery
