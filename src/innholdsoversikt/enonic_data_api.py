@@ -34,6 +34,8 @@ def eksport_innhold_enonic(
         array av content-typer queryet skal kjøres mot - hvis tom benyttes default-typer
     fields: str, valgfritt
         array av felter som skal returneres for hvert treff - hvis tom returneres alle felter
+    filnavn: str, påkrevd
+        navn og sti til filen du skal lagre dataene i
 
     Returnerer
     ----------
@@ -68,9 +70,9 @@ def eksport_innhold_enonic(
             logging.info("File is being prepared")
             for key, value in json_response.items():
                 logging.info("%s : %s \n", key, value)
-            logging.info(status_response.headers)
             time.sleep(5)
         elif status_response.status_code == 200:
+            logging.info("File is ready. Writing data to %s", filnavn)
             with tqdm.wrapattr(
                 open(innhold_data, "wb"),
                 "write",
@@ -78,7 +80,6 @@ def eksport_innhold_enonic(
                 total=int(status_response.headers.get("content-length", 0)),
                 desc=innhold_data,
             ) as fout:
-                logging.info(status_response.headers)
                 for chunk in status_response.iter_content(chunk_size=8192):
                     fout.write(chunk)
             header_status = 200
