@@ -279,7 +279,7 @@ def main():
             table_id="navno_innholdsmengde.innhold_tidsserie_test",
             source_file="data.csv",
             file_path="/tmp/data.csv",
-            schema_path="schema_tabell.json",
+            json_schema_path="schema_tabell.json",
         )
         logging.info("Innholdsoversikt steg 6: Lastet opp til database")
         logging.info("Naisjob er ferdig")
