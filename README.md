@@ -84,7 +84,7 @@ Det går an å [kjøre spørringer regelmessig](https://cloud.google.com/bigquer
 Velg rader for en gitt dato, med et utvalg på 1000
 
 ```SQL
-SELECT * FROM `project-id.dataset.table` WHERE dato = '2023-08-21'LIMIT 1000
+SELECT * FROM `project-id.dataset.table` WHERE dato = '2024-07-05' LIMIT 1000
 ```
 
 Velg samme data uten begrenset utvalg
