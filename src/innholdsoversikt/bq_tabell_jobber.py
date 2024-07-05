@@ -91,6 +91,7 @@ def skrivover_tabell(df: pd.DataFrame, client: str, table_id: str, json_schema_p
         table.num_rows,
         len(table.schema),
     )
+    return table
 
 
 # %%
@@ -118,6 +119,7 @@ def opprett_tabell(client: str, table_id: str, json_schema_path: str):
     logging.info(
         "Opprettet tabellen %s.%s.%s", table.project, table.dataset_id, table.table_id
     )
+    return table
 
 
 # %%
@@ -309,6 +311,7 @@ def oppdater_tabell_schema(client: str, table_id: str, schema):
         logging.info("Nye kolonner har blitt lagt til")
     else:
         logging.info("Nye kolonner har IKKE blitt lagt til")
+    return table
 
 
 # %%
