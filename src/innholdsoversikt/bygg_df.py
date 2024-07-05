@@ -16,7 +16,7 @@ logging.basicConfig(
 
 
 # %%
-def bygg_dataframe(liste):
+def bygg_dataframe(liste: list) -> pd.DataFrame:
     """
     Bygg en dataframe for vår tidsserie om innholdet. Send inn en liste med json-filer som skal søkes i.
 
@@ -126,7 +126,7 @@ def bygg_dataframe(liste):
 
 
 # %%
-def finn_data(items: list, query: list):
+def finn_data(items: list, query: list) -> list:
     """
     Bygg en dataframe for vår tidsserie om innholdet. Send inn en liste med json-filer som skal søkes i.
 

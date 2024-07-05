@@ -24,7 +24,6 @@ logging.basicConfig(
 # %%
 load_dotenv()
 
-DATA = ""
 client = os.getenv("GCP_BQ_OPPDATERING_CREDS")
 with open(client, "r") as keys:
     data = keys.read()
@@ -37,7 +36,7 @@ mappe = "enonic_content_data"
 
 
 # %%
-def goalpost(client, mappe):
+def goalpost(client: str, bucket_name: str) -> tuple[bool, str]:
     """
     Checks if we have archived, unpublished and published content stored in the cloud
 
@@ -45,16 +44,16 @@ def goalpost(client, mappe):
     -----------
     client: string, required
         Our credentials to use cloud services
-    mappe: string, required
+    bucket_name: string, required
         Our blob storage folder in the cloud
 
-    Returns DATA and current:
+    Returns:
     -------------------------
-    DATA, bool is True if our folder contains the archived, unpublished and published content for today's date, otherwise returns False
+    got_data, bool is True if our folder contains the archived, unpublished and published content for today's date, otherwise returns False
 
     current is today's date in the format YYYYMMDD
     """
-    blobs = hent_liste_blobs(client, mappe)
+    blobs = hent_liste_blobs(client=client, bucket_name=bucket_name)
     d = list(blobs)
     fil_urler = []
     for i in d:
@@ -66,16 +65,19 @@ def goalpost(client, mappe):
     ]
     publisert = [i for i in fil_urler if current in i and "tmp_enonic_publisert" in i]
     if len(avpublisert) > 0 and len(publisert) > 0 and len(arkivert) > 0:
-        DATA = True
+        got_data = True
     else:
-        DATA = False
-    return DATA, current
+        got_data = False
+    return got_data, current
 
 
 # %%
 
 
-def forbered_filsti(filename):
+def forbered_filsti(filename: str) -> str:
+    """
+    Lager en filsti med dato
+    """
     timestr = time.strftime("%Y%m%d")
     modsti = timestr + filename
     for char in "/-":
@@ -83,7 +85,7 @@ def forbered_filsti(filename):
     return modsti
 
 
-def eksport_arkivert():
+def eksport_arkivert() -> str:
     filnavn = "/tmp/enonic-arkivert.zip"
     eksport_innhold_enonic(
         branch="archived", query="", types="", fields="", filnavn=filnavn
@@ -101,7 +103,7 @@ def eksport_arkivert():
     return filnavn
 
 
-def eksport_avpublisert():
+def eksport_avpublisert() -> str:
     filnavn = "/tmp/enonic-avpublisert.zip"
     eksport_innhold_enonic(
         branch="unpublished", query="", types="", fields="", filnavn=filnavn
@@ -119,7 +121,7 @@ def eksport_avpublisert():
     return filnavn
 
 
-def eksport_publisert():
+def eksport_publisert() -> str:
     filnavn = "/tmp/enonic-publisert.zip"
     eksport_innhold_enonic(
         branch="published", query="", types="", fields="", filnavn=filnavn
@@ -140,7 +142,7 @@ def eksport_publisert():
 # %%
 
 
-def forbered_innholdsoversikt_datasett():
+def forbered_innholdsoversikt_datasett() -> pd.DataFrame:
     pubsti = "/tmp/enonic-publisert/www.nav.no"
     avpubsti = "/tmp/enonic-avpublisert/www.nav.no"
     arksti = "/tmp/enonic-arkivert/archive"
@@ -198,7 +200,7 @@ def forbered_innholdsoversikt_datasett():
 
 
 # %%
-def innholdsoversikt_kolonner(df):
+def innholdsoversikt_kolonner(df: pd.DataFrame) -> pd.DataFrame:
     df.rename(
         columns={
             "type": "innholdstype",
@@ -218,7 +220,7 @@ def innholdsoversikt_kolonner(df):
     return df
 
 
-def innholdsoversikt_datoer(df):
+def innholdsoversikt_datoer(df: pd.DataFrame) -> pd.DataFrame:
     df["dato"] = pd.Series(
         pd.date_range(start="today", end="today", periods=len(df)).normalize()
     )
@@ -234,7 +236,7 @@ def innholdsoversikt_datoer(df):
     return df
 
 
-def innholdsoversikt_kategorisering(df, sti):
+def innholdsoversikt_kategorisering(df: pd.DataFrame, sti: str):
     """
     Kategoriserer innholdet og skriver csv til ønsket sti
     """
@@ -253,7 +255,7 @@ def innholdsoversikt_kategorisering(df, sti):
 
 
 def main():
-    state, current = goalpost(client, mappe)
+    state, current = goalpost(client=client, bucket_name=mappe)
     if state == False:
         logging.info(
             "Vi har ikke data for %s. Fortsetter naisjob. Flagget er %s", current, state
@@ -274,10 +276,10 @@ def main():
         logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
             client=client,
-            table_id="navno_innholdsmengde.innhold_tidsserie",
+            table_id="navno_innholdsmengde.innhold_tidsserie_test",
             source_file="data.csv",
             file_path="/tmp/data.csv",
-            schema_path="schema_tabell.json",
+            json_schema_path="schema_tabell.json",
         )
         logging.info("Innholdsoversikt steg 6: Lastet opp til database")
         logging.info("Naisjob er ferdig")

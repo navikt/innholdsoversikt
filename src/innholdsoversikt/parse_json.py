@@ -10,7 +10,7 @@ logging.basicConfig(
 
 
 # %%
-def extract_element_from_json(obj, path):
+def extract_element_from_json(obj: list | dict, path: list) -> list:
     """
     Extracts an element from a nested dictionary or
     a list of nested dictionaries along a specified path.
@@ -29,7 +29,7 @@ def extract_element_from_json(obj, path):
     A list is returned if the input is a dictionary. A list of lists is returned if the input is a list of dictionary.
     """
 
-    def extract(obj, path, ind, arr):
+    def extract(obj: dict, path: list, ind: int, arr: list):
         """
         Extracts an element from a nested dictionary
         along a specified path and returns a list.

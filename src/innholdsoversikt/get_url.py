@@ -14,7 +14,19 @@ logging.basicConfig(
 
 
 # %%
-def url_parser(url):
+def url_parser(url: str) -> dict:
+    """
+    Parses a URL and returns its elements as a dictionary.
+
+    Parameters:
+    ----------
+    url: str, required
+        The URL to parse
+
+    Returns:
+    --------
+    elements: A dictionary of URL elements including the scheme, netloc, path, params, query, fragment, directories and queries
+    """
     parts = urlparse(url)
     directories = parts.path.strip("/").split("/")
     queries = parts.query.strip("&").split("&")

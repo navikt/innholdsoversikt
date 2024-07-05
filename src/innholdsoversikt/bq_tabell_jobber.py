@@ -1,6 +1,7 @@
 # %%
 import logging
 
+import pandas as pd
 from google.cloud import bigquery
 from google.api_core.exceptions import BadRequest
 
@@ -13,7 +14,9 @@ logging.basicConfig(
 
 
 # %%
-def oppdater_tabell(df, client, table_id, schema):
+def oppdater_tabell(
+    df: pd.DataFrame, client: str, table_id: str, json_schema_path: str
+):
     """
     Oppdatér datasett med append
     Les også https://cloud.google.com/bigquery/docs/samples/bigquery-load-table-dataframe
@@ -22,19 +25,21 @@ def oppdater_tabell(df, client, table_id, schema):
     ---------
     df: DataFrame, påkrevd
         DataFrame som du ønsker å oppdatere tabellen med
-    client: object, påkrevd
-        json for service account
+    client: str, påkrevd
+        string json for service account
     table_id: str, påkrevd
         ID for tabellen i bigquery som du ønsker å oppdatere med din DataFrame
-    schema: påkrevd
-        Schema for tabellen i bigquery. Kan være en liste om det er flere felt og typer.
+    json_schema_path: str, påkrevd
+        Sti til JSON schema for tabellen
+
     Returnerer
     ----------
     table: tabell med metadata fra bigquery
     """
     client = bigquery.Client.from_service_account_json(client)
     job_config = bigquery.LoadJobConfig(
-        schema=schema, write_disposition=bigquery.WriteDisposition.WRITE_APPEND
+        schema=client.schema_from_json(json_schema_path),
+        write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
     )
     job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
     try:
@@ -54,7 +59,9 @@ def oppdater_tabell(df, client, table_id, schema):
 
 
 # %%
-def skrivover_tabell(df, client, table_id, schema):
+def skrivover_tabell(
+    df: pd.DataFrame, client: str, table_id: str, json_schema_path: str
+):
     """
     Skriv over hele datasettet med en dataframe
     Les også https://cloud.google.com/bigquery/docs/samples/bigquery-load-table-dataframe
@@ -63,19 +70,21 @@ def skrivover_tabell(df, client, table_id, schema):
     ---------
     df: DataFrame, påkrevd
         DataFrame som du ønsker å skrive over tabellen med
-    client: object, påkrevd
-        json for service account
+    client: str, påkrevd
+        string json for service account
     table_id: str, påkrevd
         ID for tabellen i bigquery som du ønsker å skrive over med din DataFrame
-    schema: påkrevd
-        Schema for tabellen i bigquery. Kan være en liste om det er flere felt og typer.
+    json_schema_path: str, påkrevd
+        Sti til JSON schema for tabellen
+
     Returnerer
     ----------
     table: tabell med metadata fra bigquery
     """
     client = bigquery.Client.from_service_account_json(client)
     job_config = bigquery.LoadJobConfig(
-        schema=schema, write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE
+        schema=client.schema_from_json(json_schema_path),
+        write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
     )
     job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
     job.result()
@@ -86,21 +95,22 @@ def skrivover_tabell(df, client, table_id, schema):
         table.num_rows,
         len(table.schema),
     )
+    return table
 
 
 # %%
-def opprett_tabell(client, table_id, schema):
+def opprett_tabell(client: str, table_id: str, json_schema_path: str):
     """
     Opprett en tabell i bigquery.
 
     Parametre
     ----------
-    client: object, påkrevd
+    client: str, påkrevd
         json for service account
     table_id: str, påkrevd
         Navn på tabellen du ønsker å opprette i bigquery
-    schema: påkrevd
-        Schema for tabellen du ønsker å opprette. Kan være en liste.
+    json_schema_path: str, påkrevd
+        Sti til JSON schema for tabellen
 
     Returnerer
     ----------
@@ -108,22 +118,23 @@ def opprett_tabell(client, table_id, schema):
     """
     client = bigquery.Client.from_service_account_json(client)
     schema = schema
-    table = bigquery.Table(table_id, schema=schema)
+    table = bigquery.Table(table_id, schema=client.schema_from_json(json_schema_path))
     table = client.create_table(table)
     logging.info(
         "Opprettet tabellen %s.%s.%s", table.project, table.dataset_id, table.table_id
     )
+    return table
 
 
 # %%
-def slett_tabell(client, table_id):
+def slett_tabell(client: str, table_id: str):
     """
     Slett en tabell i bigquery.
 
     Parametre
     ----------
-    client: object, påkrevd
-        json for service account
+    client: str, påkrevd
+        String json for service account
     table_id: str, påkrevd
         Navn på tabellen du ønsker å slette i bigquery
 
@@ -137,34 +148,39 @@ def slett_tabell(client, table_id):
 
 
 # %%
-def opprett_datasett(client, dataset_id, location):
+def opprett_datasett(client: str, dataset_id: str, location: str):
     """
     Oppretter et datasett. Du må opprette et datasett før du kan opprette en tabell i bigquery.
 
     Parametre
     ---------
-    client: object, påkrevd
-        json for service account
+    client: str, påkrevd
+        string json for service account
     dataset_id: str, påkrevd
         Hva skal datasettet hete?
     location: str, påkrevd
         Hvor skal databasen opprettes, f.eks europe-north1 for Finland og europe-west1 for Belgia
+
+    Returnerer:
+    -----------
+    dataset i bigquery
     """
     client = bigquery.Client.from_service_account_json(client)
     dataset = bigquery.Dataset(dataset_id)
     dataset.location = location
     dataset = client.create_dataset(dataset, timeout=30)
     logging.info("Opprettet datasettet %s.%s", client.project, dataset.dataset_id)
+    return dataset
 
 
 # %%
-def slett_datasett(client, dataset_id):
+def slett_datasett(client: str, dataset_id: str):
     """
     Sletter et datasett og alle tabellene i datasettet.
 
     Parametre
     ---------
-    client: object, påkrevd
+    client: str, påkrevd
         json for service account
     dataset_id: str, påkrevd
         Hva heter datasettet?
@@ -175,23 +191,23 @@ def slett_datasett(client, dataset_id):
 
 
 # %%
-def legg_til_felt(client, table_id, schema):
+def legg_til_felt(client: str, table_id: str, schema: str):
     """
     For å legge til et felt i en tabell som eksisterer fra før.
     Obs! Tar 1 felt om gangen, og kolonnen blir regnet som NULLABLE, ikke REQUIRED.
 
     Parametre
     ---------
-    client: object, påkrevd
-        json for service account
+    client: str, påkrevd
+        string json for service account
     table_id: string, påkrevd
         Navn på tabellen du ønsker å endre
-    schema: påkrevd
+    schema: str, påkrevd
         Ny schema for feltet du ønsker å legge til
 
     Returnerer:
     -----------
-    schema: oppdatert schema for tabellen
+    table.schema: oppdatert schema for tabellen
     """
     client = bigquery.Client.from_service_account_json(client)
     table = client.get_table(table_id)
@@ -208,7 +224,9 @@ def legg_til_felt(client, table_id, schema):
 
 
 # %%
-def oppdater_tabell_csv(client, table_id, source_file, file_path, schema_path):
+def oppdater_tabell_csv(
+    client: str, table_id: str, source_file: str, file_path: str, json_schema_path: str
+):
     """
     Oppdaterer en bigquery tabell med en csv-fil.
 
@@ -216,18 +234,20 @@ def oppdater_tabell_csv(client, table_id, source_file, file_path, schema_path):
 
     Parametre:
     ---------
-    client: object, påkrevd
-        json for service account
-    table_id: string, påkrevd
-        Id på tabellen du ønsker å oppdatere
-    source_file: string, påkrevd
-        filnavn
-    file_path: string, påkrevd
+    client: str, påkrevd
+        string json for service account
+    table_id: str, påkrevd
+        ID på tabellen du ønsker å oppdatere
+    source_file: str, påkrevd
+        filnavn på CSV-filen
+    file_path: str, påkrevd
         sti til filen
+    json_schema_path: str, påkrevd
+        Sti til JSON schema for tabellen
     """
     client = bigquery.Client.from_service_account_json(client)
     job_config = bigquery.LoadJobConfig(
-        schema=client.schema_from_json(schema_path),
+        schema=client.schema_from_json(json_schema_path),
         source_format=bigquery.SourceFormat.CSV,
         skip_leading_rows=1,
         autodetect=False,
@@ -247,10 +267,11 @@ def oppdater_tabell_csv(client, table_id, source_file, file_path, schema_path):
         len(table.schema),
         table_id,
     )
+    return table
 
 
 # %%
-def oppdater_tabell_gcs(client, table_id, uri, schema):
+def oppdater_tabell_gcs(client: str, table_id: str, uri: str, json_schema_path: str):
     """
     Oppdatér en bigquery tabell med en csv fil fra google cloud storage
 
@@ -262,21 +283,24 @@ def oppdater_tabell_gcs(client, table_id, uri, schema):
         id for tabellen som skal oppdateres
     uri: string, påkrevd
         ...
-    schema: påkrevd
-        schema for tabellen
+    json_schema_path: str, påkrevd
+        Sti til JSON schema for tabellen
     """
     client = bigquery.Client.from_service_account_json(client)
     job_config = bigquery.LoadJobConfig(
-        schema=schema, skip_leading_rows=1, source_format=bigquery.SourceFormat.CSV
+        schema=client.schema_from_json(json_schema_path),
+        skip_leading_rows=1,
+        source_format=bigquery.SourceFormat.CSV,
     )
     load_job = client.load_table_from_uri(uri, table_id, job_config=job_config)
     load_job.result()
-    destination_table = client.get_table(table_id)
-    logging.info("Lasted %s rader", destination_table.num_rows)
+    table = client.get_table(table_id)
+    logging.info("Lasted %s rader", table.num_rows)
+    return table
 
 
 # %%
-def oppdater_tabell_schema(client, table_id, schema):
+def oppdater_tabell_schema(client: str, table_id: str, schema):
     """
     Metoden tar en kopi av schema for tabellen og oppdaterer den med schema du sender inn.
     """
@@ -291,10 +315,14 @@ def oppdater_tabell_schema(client, table_id, schema):
         logging.info("Nye kolonner har blitt lagt til")
     else:
         logging.info("Nye kolonner har IKKE blitt lagt til")
+    return table
 
 
 # %%
-def get_schema(client, table_id):
+def get_schema(client: str, table_id: str):
+    """
+    Metoden henter schema for en gitt tabell i bigquery.
+    """
     client = bigquery.Client.from_service_account_json(client)
     table = client.get_table(table_id)
     original_schema = table.schema

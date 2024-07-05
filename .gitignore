@@ -1,8 +1,8 @@
 *.egg-info
 data/
-.vscode/
 __pycache__/
-venv*
+.venv/
 .env
-secrets.json
+.vscode/
 .DS_Store
+secrets.json
