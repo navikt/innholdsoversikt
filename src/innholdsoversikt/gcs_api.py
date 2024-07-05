@@ -12,7 +12,7 @@ logging.basicConfig(
 
 
 # %%
-def opprett_mappe(client, bucket_name, location, storage_class):
+def opprett_mappe(client: str, bucket_name: str, location: str, storage_class: str):
     """
     Opprett ny mappe i google cloud storage for å lagre filer i et datasenter med lagringstype.
 
@@ -50,7 +50,9 @@ def opprett_mappe(client, bucket_name, location, storage_class):
 
 
 # %%
-def last_opp_fil(client, bucket_name, source_file_name, destination_blob_name):
+def last_opp_fil(
+    client: str, bucket_name: str, source_file_name: str, destination_blob_name: str
+):
     """
     Last opp en fil til en mappe i google cloud storage.
 
@@ -82,7 +84,7 @@ def last_opp_fil(client, bucket_name, source_file_name, destination_blob_name):
 
 
 # %%
-def hent_liste_mapper(client):
+def hent_liste_mapper(client: str):
     """
     Last ned en liste med mapper i GCS
     """
@@ -93,7 +95,7 @@ def hent_liste_mapper(client):
 
 
 # %%
-def hent_liste_blobs(client, bucket_name):
+def hent_liste_blobs(client: str, bucket_name: str):
     """
     Last ned en liste over alt innhold i en mappe i GCS
     """
@@ -104,7 +106,9 @@ def hent_liste_blobs(client, bucket_name):
 
 
 # %%
-def last_ned_fil(client, bucket_name, source_blob_name, destination_file_name):
+def last_ned_fil(
+    client: str, bucket_name: str, source_blob_name: str, destination_file_name: str
+):
     """
     Last ned en fil fra GCS til en sti
     """
@@ -121,7 +125,7 @@ def last_ned_fil(client, bucket_name, source_blob_name, destination_file_name):
 
 
 # %%
-def last_ned_i_minne(client, bucket_name, source_blob_name):
+def last_ned_i_minne(client: str, bucket_name: str, source_blob_name: str):
     """
     Last en fil fra GCS inn i minne
     """
@@ -134,7 +138,7 @@ def last_ned_i_minne(client, bucket_name, source_blob_name):
 
 
 # %%
-def slett_fil(client, bucket_name, source_blob_name):
+def slett_fil(client: str, bucket_name: str, source_blob_name: str):
     """
     Slett en fil fra GCS
     """

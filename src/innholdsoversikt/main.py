@@ -37,7 +37,7 @@ mappe = "enonic_content_data"
 
 
 # %%
-def goalpost(client, mappe):
+def goalpost(client: str, mappe: str) -> tuple[bool, str]:
     """
     Checks if we have archived, unpublished and published content stored in the cloud
 
@@ -75,7 +75,10 @@ def goalpost(client, mappe):
 # %%
 
 
-def forbered_filsti(filename):
+def forbered_filsti(filename: str) -> str:
+    """
+    Lager en filsti med dato
+    """
     timestr = time.strftime("%Y%m%d")
     modsti = timestr + filename
     for char in "/-":
@@ -83,7 +86,7 @@ def forbered_filsti(filename):
     return modsti
 
 
-def eksport_arkivert():
+def eksport_arkivert() -> str:
     filnavn = "/tmp/enonic-arkivert.zip"
     eksport_innhold_enonic(
         branch="archived", query="", types="", fields="", filnavn=filnavn
@@ -101,7 +104,7 @@ def eksport_arkivert():
     return filnavn
 
 
-def eksport_avpublisert():
+def eksport_avpublisert() -> str:
     filnavn = "/tmp/enonic-avpublisert.zip"
     eksport_innhold_enonic(
         branch="unpublished", query="", types="", fields="", filnavn=filnavn
@@ -119,7 +122,7 @@ def eksport_avpublisert():
     return filnavn
 
 
-def eksport_publisert():
+def eksport_publisert() -> str:
     filnavn = "/tmp/enonic-publisert.zip"
     eksport_innhold_enonic(
         branch="published", query="", types="", fields="", filnavn=filnavn
@@ -140,7 +143,7 @@ def eksport_publisert():
 # %%
 
 
-def forbered_innholdsoversikt_datasett():
+def forbered_innholdsoversikt_datasett() -> pd.DataFrame:
     pubsti = "/tmp/enonic-publisert/www.nav.no"
     avpubsti = "/tmp/enonic-avpublisert/www.nav.no"
     arksti = "/tmp/enonic-arkivert/archive"
@@ -198,7 +201,7 @@ def forbered_innholdsoversikt_datasett():
 
 
 # %%
-def innholdsoversikt_kolonner(df):
+def innholdsoversikt_kolonner(df: pd.DataFrame) -> pd.DataFrame:
     df.rename(
         columns={
             "type": "innholdstype",
@@ -218,7 +221,7 @@ def innholdsoversikt_kolonner(df):
     return df
 
 
-def innholdsoversikt_datoer(df):
+def innholdsoversikt_datoer(df: pd.DataFrame) -> pd.DataFrame:
     df["dato"] = pd.Series(
         pd.date_range(start="today", end="today", periods=len(df)).normalize()
     )
@@ -234,7 +237,7 @@ def innholdsoversikt_datoer(df):
     return df
 
 
-def innholdsoversikt_kategorisering(df, sti):
+def innholdsoversikt_kategorisering(df: pd.DataFrame, sti: str):
     """
     Kategoriserer innholdet og skriver csv til ønsket sti
     """
@@ -274,7 +277,7 @@ def main():
         logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
             client=client,
-            table_id="navno_innholdsmengde.innhold_tidsserie",
+            table_id="navno_innholdsmengde.innhold_tidsserie_test",
             source_file="data.csv",
             file_path="/tmp/data.csv",
             schema_path="schema_tabell.json",

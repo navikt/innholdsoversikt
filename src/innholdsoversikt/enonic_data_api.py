@@ -16,7 +16,9 @@ logging.basicConfig(
 
 
 # %%
-def eksport_innhold_enonic(branch, query, types, fields, filnavn):
+def eksport_innhold_enonic(
+    branch: str, query: str, types: str, fields: str, filnavn: str
+):
     """
     Last ned innhold fra Enonic XP
 
