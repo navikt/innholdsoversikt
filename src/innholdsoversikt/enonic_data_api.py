@@ -60,7 +60,7 @@ def eksport_innhold_enonic(
         logging.info("%s : %s \n", key, value)
     result_url = json_response["resultUrl"]
     request_id = json_response["requestId"]
-    header_status = ""
+    header_status = 0
     while header_status != 200:
         status_response = s.get(result_url, headers=headers, stream=True, timeout=600)
         status_response.raise_for_status()
