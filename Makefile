@@ -25,6 +25,10 @@ format:
 	source $(VENV); \
 	black --exclude ^/.venv/ .
 
+mypy:
+	source $(VENV); \
+	mypy src
+
 start-docker-colima:
 	colima start
 
