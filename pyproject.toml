@@ -19,7 +19,8 @@ dependencies = [
 dev = [
     "ipykernel",
     "black",
-    "openpyxl"
+    "openpyxl",
+    "mypy"
 ]
 
 [project.urls]
@@ -36,3 +37,6 @@ exclude = ["tests", "testing"]
 [build-system]
 requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
+
+[tool.mypy]
+ignore_missing_imports = true
