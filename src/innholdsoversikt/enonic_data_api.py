@@ -5,7 +5,7 @@ import time
 from tqdm.auto import tqdm
 import requests
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+from urllib3.util import Retry
 
 logging.getLogger(__name__)
 logging.basicConfig(
