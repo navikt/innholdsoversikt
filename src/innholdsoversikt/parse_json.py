@@ -1,5 +1,6 @@
 # %%
 import logging
+from typing import Any
 
 logging.getLogger(__name__)
 logging.basicConfig(
@@ -10,7 +11,7 @@ logging.basicConfig(
 
 
 # %%
-def extract_element_from_json(obj: list | dict, path: list) -> list:
+def extract_element_from_json(obj: list | dict, path: list) -> list | list[list]:
     """
     Extracts an element from a nested dictionary or
     a list of nested dictionaries along a specified path.
@@ -29,16 +30,27 @@ def extract_element_from_json(obj: list | dict, path: list) -> list:
     A list is returned if the input is a dictionary. A list of lists is returned if the input is a list of dictionary.
     """
 
-    def extract(obj: dict, path: list, ind: int, arr: list):
+    def extract(obj: Any, path: list, ind: int, arr: list):
         """
         Extracts an element from a nested dictionary
         along a specified path and returns a list.
-        obj - dict - input dictionary
-        path - list - list of strings that form the JSON path
-        ind - int - starting index
-        arr - list - output list
+
+        Parameters:
+        -----------
+        obj: dict or list, required
+            input dictionary or list
+        path: list, required
+            list of strings that form the JSON path
+        ind: int, required
+            starting index
+        arr: list, required
+            output list
+
+        Returns:
+        --------
+        arr, modified list
         """
-        key = path[ind]
+        key: str = path[ind]
         if ind + 1 < len(path):
             if isinstance(obj, dict):
                 if key in obj.keys():
