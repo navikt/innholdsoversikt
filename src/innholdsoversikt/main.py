@@ -26,7 +26,7 @@ load_dotenv()
 
 client_json = os.getenv(key="GCP_BQ_OPPDATERING_CREDS", default="empty")
 if client_json is None:
-    raise KeyError
+    raise
 with open(client_json, "r") as keys:
     data = keys.read()
 obj = json.loads(data)
