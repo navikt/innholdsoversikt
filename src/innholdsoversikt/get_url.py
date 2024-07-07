@@ -1,9 +1,9 @@
 # %%
 import logging
+from urllib.parse import urlparse
 
 import pandas as pd
 import requests
-from urllib.parse import urlparse
 
 logging.getLogger(__name__)
 logging.basicConfig(

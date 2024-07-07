@@ -2,9 +2,9 @@
 import logging
 import time
 
-from tqdm.auto import tqdm
 import requests
 from requests.adapters import HTTPAdapter
+from tqdm.auto import tqdm
 from urllib3.util import Retry
 
 logging.getLogger(__name__)

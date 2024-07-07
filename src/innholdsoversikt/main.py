@@ -1,18 +1,18 @@
 # %%
-import sys
-import os
 import json
+import logging
+import os
+import sys
 import time
 import zipfile
-import logging
 
 import pandas as pd
 from dotenv import load_dotenv
 
+from bq_tabell_jobber import oppdater_tabell_csv
 from bygg_df import bygg_dataframe
 from enonic_data_api import eksport_innhold_enonic
-from bq_tabell_jobber import oppdater_tabell_csv
-from gcs_api import last_opp_fil, hent_liste_blobs
+from gcs_api import hent_liste_blobs, last_opp_fil
 from get_url import url_parser
 
 logging.getLogger(__name__)
