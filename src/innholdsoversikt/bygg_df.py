@@ -2,7 +2,6 @@
 import json
 import logging
 
-import numpy as np
 import pandas as pd
 
 from parse_json import extract_element_from_json

@@ -2,9 +2,6 @@
 import logging
 from urllib.parse import urlparse
 
-import pandas as pd
-import requests
-
 logging.getLogger(__name__)
 logging.basicConfig(
     level=logging.INFO,
