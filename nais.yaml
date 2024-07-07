@@ -11,7 +11,7 @@ spec:
       external:
         - host: nav-enonicxp-dataquery.intern.nav.no
   image: {{ image }}
-  schedule: '0 6 1 * *'
+  schedule: '0 7 8 7 *'
   webproxy: true
   env:
     - name: GCP_BQ_OPPDATERING_CREDS
