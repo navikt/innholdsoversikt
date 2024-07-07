@@ -23,6 +23,7 @@ update: update-deps init
 
 format:
 	source $(VENV); \
+	isort src; \
 	black --exclude ^/.venv/ .
 
 mypy:

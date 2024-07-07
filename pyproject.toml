@@ -20,7 +20,8 @@ dev = [
     "ipykernel",
     "black",
     "openpyxl",
-    "mypy"
+    "mypy",
+    "isort"
 ]
 
 [project.urls]
@@ -40,3 +41,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.mypy]
 ignore_missing_imports = true
+
+[tool.isort]
+profile = "black"
+src_paths=["src/innholdsoversikt"]
+sections=["FUTURE","STDLIB","THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]

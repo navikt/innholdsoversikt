@@ -73,6 +73,8 @@ ipykernel==6.29.5
     # via innholdsoversikt (pyproject.toml)
 ipython==8.26.0
     # via ipykernel
+isort==5.13.2
+    # via innholdsoversikt (pyproject.toml)
 jedi==0.19.1
     # via ipython
 jupyter-client==8.6.2
