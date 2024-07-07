@@ -1,8 +1,5 @@
 # %%
 import logging
-
-import pandas as pd
-import requests
 from urllib.parse import urlparse
 
 logging.getLogger(__name__)

@@ -1,7 +1,7 @@
 # %%
 import logging
 
-from google.cloud import storage
+import google.cloud.storage as storage
 
 logging.getLogger(__name__)
 logging.basicConfig(
@@ -12,15 +12,17 @@ logging.basicConfig(
 
 
 # %%
-def opprett_mappe(client: str, bucket_name: str, location: str, storage_class: str):
+def opprett_mappe(
+    client_json_path: str, bucket_name: str, location: str, storage_class: str
+):
     """
     Opprett ny mappe i google cloud storage for å lagre filer i et datasenter med lagringstype.
 
     Parametre:
     ---------
 
-    client: påkrevd
-        JSON for å bruke service konto med google cloud tjenester
+    client_json_path: str, påkrevd
+        Navn på json-filen for service account i google cloud
 
     bucket_name: str, påkrevd
         Hva skal mappen med innholdet hete? Se også https://cloud.google.com/storage/docs/naming-buckets
@@ -35,7 +37,7 @@ def opprett_mappe(client: str, bucket_name: str, location: str, storage_class: s
     ----------
     new_bucket: den nye mappen
     """
-    client = storage.Client.from_service_account_json(client)
+    client = storage.Client.from_service_account_json(client_json_path)
     bucket = client.bucket(bucket_name)
     bucket.storage_class = storage_class
     new_bucket = client.create_bucket(bucket, location=location)
@@ -51,7 +53,10 @@ def opprett_mappe(client: str, bucket_name: str, location: str, storage_class: s
 
 # %%
 def last_opp_fil(
-    client: str, bucket_name: str, source_file_name: str, destination_blob_name: str
+    client_json_path: str,
+    bucket_name: str,
+    source_file_name: str,
+    destination_blob_name: str,
 ):
     """
     Last opp en fil til en mappe i google cloud storage.
@@ -59,8 +64,8 @@ def last_opp_fil(
     Parametre:
     ----------
 
-    client: påkrevd
-        Client for å bruke service konto med google cloud tjenester
+    client_json_path: str, påkrevd
+        Navn på json-filen for service account i google cloud
 
     bucket_name: str, påkrevd
         Hva heter mappen du skal laste opp innholdet til?
@@ -72,7 +77,7 @@ def last_opp_fil(
         Hva skal filen hete når den er lastet opp i mappen?
 
     """
-    client = storage.Client.from_service_account_json(client)
+    client = storage.Client.from_service_account_json(client_json_path)
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
 
@@ -84,22 +89,43 @@ def last_opp_fil(
 
 
 # %%
-def hent_liste_mapper(client: str):
+def hent_liste_mapper(client_json_path: str):
     """
     Last ned en liste med mapper i GCS
+
+    Parametre:
+    ---------
+    client_json_path: str, påkrevd
+        Navn på json-filen for service account i google cloud
+
+    Returnerer:
+    ----------
+    buckets, en liste med alle buckets i google cloud storage
     """
-    client = storage.Client.from_service_account_json(client)
+    client = storage.Client.from_service_account_json(client_json_path)
     buckets = list(client.list_buckets())
     logging.info("Lasted ned en liste med mapper")
     return buckets
 
 
 # %%
-def hent_liste_blobs(client: str, bucket_name: str):
+def hent_liste_blobs(client_json_path: str, bucket_name: str):
     """
     Last ned en liste over alt innhold i en mappe i GCS
+
+    Parametre:
+    ----------
+    client_json_path: str, påkrevd
+        Navn på json-filen for service account i google cloud
+
+    bucket_name: str, påkrevd
+        Navn på mappen i google cloud storage
+
+    Returnerer:
+    ----------
+    blobs, en liste med alle objekter i google cloud storage
     """
-    client = storage.Client.from_service_account_json(client)
+    client = storage.Client.from_service_account_json(client_json_path)
     blobs = client.list_blobs(bucket_name)
     logging.info("Lastet ned en liste med blobs i mappen %s", bucket_name)
     return blobs
@@ -107,12 +133,29 @@ def hent_liste_blobs(client: str, bucket_name: str):
 
 # %%
 def last_ned_fil(
-    client: str, bucket_name: str, source_blob_name: str, destination_file_name: str
+    client_json_path: str,
+    bucket_name: str,
+    source_blob_name: str,
+    destination_file_name: str,
 ):
     """
     Last ned en fil fra GCS til en sti
+
+    Parametre:
+    ----------
+    client_json_path: str, påkrevd
+        Navn på json-filen for service account i google cloud
+
+    bucket_name: str, påkrevd
+        Navn på mappen i google cloud storage
+
+    source_blob_name: str, påkrevd
+        Navn på objektet som skal lastes ned
+
+    destination_file_name: str, påkrevd
+        Sti og filnavn der du vil laste ned dataene
     """
-    client = storage.Client.from_service_account_json(client)
+    client = storage.Client.from_service_account_json(client_json_path)
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(source_blob_name)
     blob.download_to_filename(destination_file_name)
@@ -125,11 +168,26 @@ def last_ned_fil(
 
 
 # %%
-def last_ned_i_minne(client: str, bucket_name: str, source_blob_name: str):
+def last_ned_i_minne(client_json_path: str, bucket_name: str, source_blob_name: str):
     """
     Last en fil fra GCS inn i minne
+
+    Parametre:
+    ----------
+    client_json_path: str, påkrevd
+        Navn på json-filen for service account i google cloud
+
+    bucket_name: str, påkrevd
+        Mappen i google cloud storage
+
+    source_blob_name: str, påkrevd
+        Filnavn på objektet du vil laste ned
+
+    Returnerer:
+    -----------
+    contents: bytes av dataene lagret i minne
     """
-    client = storage.Client.from_service_account_json(client)
+    client = storage.Client.from_service_account_json(client_json_path)
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(source_blob_name)
     contents = blob.download_as_string()
@@ -138,11 +196,22 @@ def last_ned_i_minne(client: str, bucket_name: str, source_blob_name: str):
 
 
 # %%
-def slett_fil(client: str, bucket_name: str, source_blob_name: str):
+def slett_fil(client_json_path: str, bucket_name: str, source_blob_name: str):
     """
     Slett en fil fra GCS
+
+    Parametre:
+    ----------
+    client_json_path: str, påkrevd
+        Navn på json-filen for service account i google cloud
+
+    bucket_name: str, påkrevd
+        Navn på mappen i google cloud storage
+
+    source_blob_name: str, påkrevd
+        Navn på objektet som skal lastes ned
     """
-    client = storage.Client.from_service_account_json(client)
+    client = storage.Client.from_service_account_json(client_json_path)
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(source_blob_name)
     blob.delete()

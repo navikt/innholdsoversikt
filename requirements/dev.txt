@@ -73,6 +73,8 @@ ipykernel==6.29.5
     # via innholdsoversikt (pyproject.toml)
 ipython==8.26.0
     # via ipykernel
+isort==5.13.2
+    # via innholdsoversikt (pyproject.toml)
 jedi==0.19.1
     # via ipython
 jupyter-client==8.6.2
@@ -85,8 +87,12 @@ matplotlib-inline==0.1.7
     # via
     #   ipykernel
     #   ipython
+mypy==1.10.1
+    # via innholdsoversikt (pyproject.toml)
 mypy-extensions==1.0.0
-    # via black
+    # via
+    #   black
+    #   mypy
 nest-asyncio==1.6.0
     # via ipykernel
 numpy==2.0.0
@@ -162,7 +168,9 @@ six==1.16.0
 stack-data==0.6.3
     # via ipython
 tomli==2.0.1
-    # via black
+    # via
+    #   black
+    #   mypy
 tornado==6.4.1
     # via
     #   ipykernel
@@ -181,6 +189,7 @@ typing-extensions==4.12.2
     # via
     #   black
     #   ipython
+    #   mypy
 tzdata==2024.1
     # via pandas
 urllib3==2.2.2

@@ -19,7 +19,9 @@ dependencies = [
 dev = [
     "ipykernel",
     "black",
-    "openpyxl"
+    "openpyxl",
+    "mypy",
+    "isort"
 ]
 
 [project.urls]
@@ -36,3 +38,11 @@ exclude = ["tests", "testing"]
 [build-system]
 requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.isort]
+profile = "black"
+src_paths=["src/innholdsoversikt"]
+sections=["FUTURE","STDLIB","THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]

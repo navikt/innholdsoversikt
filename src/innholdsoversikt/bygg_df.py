@@ -2,7 +2,6 @@
 import json
 import logging
 
-import numpy as np
 import pandas as pd
 
 from parse_json import extract_element_from_json
@@ -49,7 +48,7 @@ def bygg_dataframe(liste: list) -> pd.DataFrame:
 
     for i in liste:
         with open(i, "r") as thefile:
-            j = json.load(thefile)
+            j: dict | list[dict] = json.load(thefile)
             try:
                 list_id.append(extract_element_from_json(j, ["_id"]))
                 list_type.append(extract_element_from_json(j, ["type"]))
@@ -81,21 +80,21 @@ def bygg_dataframe(liste: list) -> pd.DataFrame:
                 )
                 list_language.append(extract_element_from_json(j, ["language"]))
             except KeyError:
-                list_id.append(np.nan)
-                list_type.append(np.nan)
-                list_created_time.append(np.nan)
-                list_modified_time.append(np.nan)
-                list_path.append(np.nan)
-                list_publish_first.append(np.nan)
-                list_publish_from.append(np.nan)
-                list_displayName.append(np.nan)
-                list_data_owner.append(np.nan)
-                list_data_managedby.append(np.nan)
-                list_data_taxonomy.append(np.nan)
-                list_data_area.append(np.nan)
-                list_data_audience.append(np.nan)
-                list_data_customPath.append(np.nan)
-                list_language.append(np.nan)
+                list_id.append([None])
+                list_type.append([None])
+                list_created_time.append([None])
+                list_modified_time.append([None])
+                list_path.append([None])
+                list_publish_first.append([None])
+                list_publish_from.append([None])
+                list_displayName.append([None])
+                list_data_owner.append([None])
+                list_data_managedby.append([None])
+                list_data_taxonomy.append([None])
+                list_data_area.append([None])
+                list_data_audience.append([None])
+                list_data_customPath.append([None])
+                list_language.append([None])
     df = pd.DataFrame(
         {
             "_id": [item for sublist in list_id for item in sublist],
@@ -149,5 +148,5 @@ def finn_data(items: list, query: list) -> list:
             try:
                 found.append(extract_element_from_json(j, query))
             except KeyError:
-                found.append(np.nan)
+                found.append([None])
     return found

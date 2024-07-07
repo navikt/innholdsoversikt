@@ -1,18 +1,18 @@
 # %%
-import sys
-import os
 import json
+import logging
+import os
+import sys
 import time
 import zipfile
-import logging
 
 import pandas as pd
 from dotenv import load_dotenv
 
+from bq_tabell_jobber import oppdater_tabell_csv
 from bygg_df import bygg_dataframe
 from enonic_data_api import eksport_innhold_enonic
-from bq_tabell_jobber import oppdater_tabell_csv
-from gcs_api import last_opp_fil, hent_liste_blobs
+from gcs_api import hent_liste_blobs, last_opp_fil
 from get_url import url_parser
 
 logging.getLogger(__name__)
@@ -24,8 +24,10 @@ logging.basicConfig(
 # %%
 load_dotenv()
 
-client = os.getenv("GCP_BQ_OPPDATERING_CREDS")
-with open(client, "r") as keys:
+client_json_path = os.getenv(key="GCP_BQ_OPPDATERING_CREDS", default="empty")
+if client_json_path == "empty":
+    raise Exception("No credentials")
+with open(client_json_path, "r") as keys:
     data = keys.read()
 obj = json.loads(data)
 project_id = obj["project_id"]
@@ -36,13 +38,13 @@ mappe = "enonic_content_data"
 
 
 # %%
-def goalpost(client: str, bucket_name: str) -> tuple[bool, str]:
+def goalpost(client_json_path: str, bucket_name: str) -> tuple[bool, str]:
     """
     Checks if we have archived, unpublished and published content stored in the cloud
 
     Parameters:
     -----------
-    client: string, required
+    client_json_path: string, required
         Our credentials to use cloud services
     bucket_name: string, required
         Our blob storage folder in the cloud
@@ -53,7 +55,7 @@ def goalpost(client: str, bucket_name: str) -> tuple[bool, str]:
 
     current is today's date in the format YYYYMMDD
     """
-    blobs = hent_liste_blobs(client=client, bucket_name=bucket_name)
+    blobs = hent_liste_blobs(client_json_path=client_json_path, bucket_name=bucket_name)
     d = list(blobs)
     fil_urler = []
     for i in d:
@@ -92,7 +94,7 @@ def eksport_arkivert() -> str:
     )
     logging.info("Lastet ned %s", filnavn)
     last_opp_fil(
-        client=client,
+        client_json_path=client_json_path,
         bucket_name=mappe,
         source_file_name=filnavn,
         destination_blob_name=forbered_filsti(filnavn),
@@ -110,7 +112,7 @@ def eksport_avpublisert() -> str:
     )
     logging.info("Lastet ned %s", filnavn)
     last_opp_fil(
-        client=client,
+        client_json_path=client_json_path,
         bucket_name=mappe,
         source_file_name=filnavn,
         destination_blob_name=forbered_filsti(filnavn),
@@ -128,7 +130,7 @@ def eksport_publisert() -> str:
     )
     logging.info("Lastet ned %s", filnavn)
     last_opp_fil(
-        client=client,
+        client_json_path=client_json_path,
         bucket_name=mappe,
         source_file_name=filnavn,
         destination_blob_name=forbered_filsti(filnavn),
@@ -255,7 +257,7 @@ def innholdsoversikt_kategorisering(df: pd.DataFrame, sti: str):
 
 
 def main():
-    state, current = goalpost(client=client, bucket_name=mappe)
+    state, current = goalpost(client_json_path=client_json_path, bucket_name=mappe)
     if state == False:
         logging.info(
             "Vi har ikke data for %s. Fortsetter naisjob. Flagget er %s", current, state
@@ -268,15 +270,15 @@ def main():
         df = innholdsoversikt_datoer(df)
         innholdsoversikt_kategorisering(df, sti="/tmp/data.csv")
         last_opp_fil(
-            client=client,
+            client_json_path=client_json_path,
             bucket_name="enonic_data_csv",
             source_file_name="/tmp/data.csv",
             destination_blob_name=forbered_filsti("/tmp/data.csv"),
         )
         logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
-            client=client,
-            table_id="navno_innholdsmengde.innhold_tidsserie",
+            client_json_path=client_json_path,
+            table_id="navno_innholdsmengde.innhold_tidsserie_test",
             source_file="data.csv",
             file_path="/tmp/data.csv",
             json_schema_path="schema_tabell.json",

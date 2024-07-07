@@ -23,7 +23,12 @@ update: update-deps init
 
 format:
 	source $(VENV); \
+	isort src; \
 	black --exclude ^/.venv/ .
+
+mypy:
+	source $(VENV); \
+	mypy src
 
 start-docker-colima:
 	colima start
