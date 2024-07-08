@@ -96,7 +96,7 @@ def eksport_arkivert() -> str:
     last_opp_fil(
         client_json_path=client_json_path,
         bucket_name=mappe,
-        source_file_name=filnavn,
+        source_file_path=filnavn,
         destination_blob_name=forbered_filsti(filnavn),
     )
     logging.info("Lastet opp rådataene %s til GCP", filnavn)
@@ -114,7 +114,7 @@ def eksport_avpublisert() -> str:
     last_opp_fil(
         client_json_path=client_json_path,
         bucket_name=mappe,
-        source_file_name=filnavn,
+        source_file_path=filnavn,
         destination_blob_name=forbered_filsti(filnavn),
     )
     logging.info("Lastet opp rådataene %s til GCP", filnavn)
@@ -132,7 +132,7 @@ def eksport_publisert() -> str:
     last_opp_fil(
         client_json_path=client_json_path,
         bucket_name=mappe,
-        source_file_name=filnavn,
+        source_file_path=filnavn,
         destination_blob_name=forbered_filsti(filnavn),
     )
     logging.info("Lastet opp rådataene %s til GCP", filnavn)
@@ -272,15 +272,14 @@ def main():
         last_opp_fil(
             client_json_path=client_json_path,
             bucket_name="enonic_data_csv",
-            source_file_name="/tmp/data.csv",
+            source_file_path="/tmp/data.csv",
             destination_blob_name=forbered_filsti("/tmp/data.csv"),
         )
         logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
             client_json_path=client_json_path,
             table_id="navno_innholdsmengde.innhold_tidsserie_test",
-            source_file="data.csv",
-            file_path="/tmp/data.csv",
+            source_file_path="/tmp/data.csv",
             json_schema_path="schema_tabell.json",
         )
         logging.info("Innholdsoversikt steg 6: Lastet opp til database")

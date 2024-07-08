@@ -55,7 +55,7 @@ def opprett_mappe(
 def last_opp_fil(
     client_json_path: str,
     bucket_name: str,
-    source_file_name: str,
+    source_file_path: str,
     destination_blob_name: str,
 ):
     """
@@ -70,7 +70,7 @@ def last_opp_fil(
     bucket_name: str, påkrevd
         Hva heter mappen du skal laste opp innholdet til?
 
-    source_file_name: str, påkrevd
+    source_file_path: str, påkrevd
         Stien og navnet på filen du skal laste opp
 
     destination_blob_name: str, påkrevd
@@ -81,10 +81,10 @@ def last_opp_fil(
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
 
-    blob.upload_from_filename(source_file_name)
+    blob.upload_from_filename(source_file_path)
 
     logging.info(
-        "Filen %s ble lastet opp som %s", source_file_name, destination_blob_name
+        "Filen %s ble lastet opp som %s", source_file_path, destination_blob_name
     )
 
 

@@ -226,8 +226,7 @@ def legg_til_felt(client_json_path: str, table_id: str, schema: str):
 def oppdater_tabell_csv(
     client_json_path: str,
     table_id: str,
-    source_file: str,
-    file_path: str,
+    source_file_path: str,
     json_schema_path: str,
 ):
     """
@@ -241,10 +240,8 @@ def oppdater_tabell_csv(
         string json for service account
     table_id: str, påkrevd
         ID på tabellen du ønsker å oppdatere
-    source_file: str, påkrevd
-        filnavn på CSV-filen
-    file_path: str, påkrevd
-        sti til filen
+    source_file_path: str, påkrevd
+        sti og navnet på CSV-filen, f.eks "/tmp/data.csv"
     json_schema_path: str, påkrevd
         Sti til JSON schema for tabellen
     """
@@ -255,9 +252,10 @@ def oppdater_tabell_csv(
         skip_leading_rows=1,
         autodetect=False,
     )
-    job = client.load_table_from_file(
-        file_obj=source_file, destination=table_id, job_config=job_config
-    )
+    with open(source_file_path, "rb") as data:
+        job = client.load_table_from_file(
+            file_obj=data, destination=table_id, job_config=job_config
+        )
     try:
         job.result()
     except BadRequest:
