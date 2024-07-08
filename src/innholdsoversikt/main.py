@@ -278,7 +278,7 @@ def main():
         logging.info("Innholdsoversikt steg 5: CSV backup lastet opp")
         oppdater_tabell_csv(
             client_json_path=client_json_path,
-            table_id="navno_innholdsmengde.innhold_tidsserie_test",
+            table_id="navno_innholdsmengde.innhold_tidsserie",
             source_file_path="/tmp/data.csv",
             json_schema_path="schema_tabell.json",
         )
