@@ -4,7 +4,7 @@
 black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Dette er vår cronjob-app på NAIS for å skaffe oversikt over innholdet vårt på nav.no og oppdatere [vårt 
-dashboard](https://metabase.intern.nav.no/dashboard/11-innholdsoversikt-pa-nav-no) 
+dashboard](https://metabase.ansatt.nav.no/dashboard/11-innholdsoversikt-pa-nav-no) 
 der vi følger med på innholdsmengde over tid.
 
 [main](/src/innholdsoversikt/main.py) trekker ut innholdet vårt fra CMSet Enonic XP og lager 
