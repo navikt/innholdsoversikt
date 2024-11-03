@@ -11,7 +11,14 @@ spec:
       external:
         - host: nav-enonicxp-dataquery.intern.nav.no
   image: {{ image }}
-  schedule: '0 6 1 * *'
+  schedule: '50 15 3 11 *'
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: 500m
+      memory: 2Gi
   webproxy: true
   env:
     - name: GCP_BQ_OPPDATERING_CREDS
