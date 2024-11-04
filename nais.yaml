@@ -11,7 +11,7 @@ spec:
       external:
         - host: nav-enonicxp-dataquery.intern.nav.no
   image: {{ image }}
-  schedule: '07 35 4 11 *'
+  schedule: '40 07 4 11 *'
   resources:
     requests:
       cpu: 500m
