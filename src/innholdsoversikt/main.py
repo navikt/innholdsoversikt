@@ -180,8 +180,10 @@ def forbered_innholdsoversikt_datasett() -> pd.DataFrame:
     )
     url_list = df["_path"].tolist()
     df_urls = pd.DataFrame([url_parser(i) for i in url_list])
+    padded_directories = df_urls["directories"].apply(lambda x: x + [None] * (10 - len(x)))
+
     df_dirs = pd.DataFrame(
-        df_urls["directories"].to_list(),
+        padded_directories.to_list(),
         columns=[
             "level_1",
             "level_2",
