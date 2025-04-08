@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   docker_image: ghcr.io/navikt/innholdsoversikt-dashboard:${{ github.sha }}
