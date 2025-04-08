@@ -14,6 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+      contents: read
+      id-token: write
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
+      telemetry: ${{ steps.docker-build-push.outputs.telemetry }}
     steps:
 
     - name: Checkout repository
@@ -40,21 +45,24 @@ jobs:
 
     - name: Build and push image
       uses: nais/docker-build-push@v0
+      id: docker-build-push
       with:
         team: personbruker
-        project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-        identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
         image_suffix: innholdsoversikt-dashboard
 
   deploy:
     name: Deploy to NAIS
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
     steps:
     - uses: actions/checkout@v4
     - uses: nais/deploy/actions/deploy@v2
       env:
-        APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
         CLUSTER: prod-gcp
         RESOURCE: nais.yaml
-        VAR: image=${{ env.docker_image }}
+        WORKLOAD_IMAGE: ${{ needs.build.outputs.image }}
+        TELEMETRY: ${{ needs.build.outputs.telemetry }}
