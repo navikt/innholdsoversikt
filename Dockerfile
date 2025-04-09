@@ -17,4 +17,4 @@ USER 999
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV GCP_BQ_OPPDATERING_CREDS=secrets.json
-CMD exec python main.py
+CMD ["python", "main.py"]
