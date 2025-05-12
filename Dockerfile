@@ -7,8 +7,8 @@ COPY ["requirements/main.txt", "main.txt"]
 RUN pip install --upgrade pip && pip install --no-cache-dir -r main.txt
 
 FROM python:3.12-alpine3.21 AS build-image
-RUN groupadd -g 999 python && \
-    useradd -r -u 999 -g python python
+RUN addgroup -g 999 python && \
+    adduser -D -u 999 -G python python
 USER 999
 WORKDIR /app
 COPY --chown=python:python --from=compile-image /opt/venv /opt/venv
