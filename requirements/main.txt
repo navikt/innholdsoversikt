@@ -69,7 +69,7 @@ idna==3.7
     # via requests
 ipykernel==6.29.5
     # via innholdsoversikt (pyproject.toml)
-ipython==9.2.0
+ipython==8.26.0
     # via ipykernel
 ipython-pygments-lexers==1.1.1
     # via ipython
