@@ -8,7 +8,7 @@ license = {file = "LICENSE"}
 
 dependencies = [
     "requests",
-    "pandas>=2.2.3,<2.3.0",
+    "pandas>=2.0.3,<2.1.0",
     "tqdm",
     "google-cloud-bigquery",
     "google-cloud-storage",

@@ -20,9 +20,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and install Python dependencies
-COPY ["requirements/main.txt", "main.txt"]
+COPY pyproject.toml .
 RUN pip install --upgrade pip \
-    && pip install --no-cache-dir -r main.txt
+    && pip install pip-tools \
+    && pip-compile --output-file=requirements.txt pyproject.toml \
+    && pip install --no-cache-dir -r requirements.txt
 
 # ─────────────────────────────────────────────────────────
 
@@ -39,7 +41,7 @@ WORKDIR /app
 COPY --chown=python:python --from=compile-image /opt/venv /opt/venv
 
 # Copy source code
-COPY --chown=python:python /src/innholdsoversikt .
+COPY --chown=python:python src/innholdsoversikt .
 
 # Set environment and entrypoint
 ENV VIRTUAL_ENV=/opt/venv
