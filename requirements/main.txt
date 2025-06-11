@@ -10,13 +10,13 @@ asttokens==3.0.0
     # via stack-data
 black==25.1.0
     # via innholdsoversikt (pyproject.toml)
-cachetools==5.3.3
+cachetools==5.5.2
     # via google-auth
-certifi==2024.7.4
+certifi==2025.4.26
     # via requests
-charset-normalizer==3.3.2
+charset-normalizer==3.4.2
     # via requests
-click==8.2.0
+click==8.2.1
     # via black
 comm==0.2.2
     # via ipykernel
@@ -28,48 +28,48 @@ et-xmlfile==2.0.0
     # via openpyxl
 executing==2.2.0
     # via stack-data
-google-api-core[grpc]==2.19.1
+google-api-core[grpc]==2.25.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.31.0
+google-auth==2.40.3
     # via
     #   google-api-core
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-cloud-bigquery==3.25.0
+google-cloud-bigquery==3.34.0
     # via innholdsoversikt (pyproject.toml)
-google-cloud-core==2.4.1
+google-cloud-core==2.4.3
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==2.17.0
+google-cloud-storage==3.1.0
     # via innholdsoversikt (pyproject.toml)
-google-crc32c==1.5.0
+google-crc32c==1.7.1
     # via
     #   google-cloud-storage
     #   google-resumable-media
-google-resumable-media==2.7.1
+google-resumable-media==2.7.2
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-googleapis-common-protos==1.63.2
+googleapis-common-protos==1.70.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.64.1
+grpcio==1.73.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.64.1
+grpcio-status==1.73.0
     # via google-api-core
-idna==3.7
+idna==3.10
     # via requests
 ipykernel==6.29.5
     # via innholdsoversikt (pyproject.toml)
-ipython==8.26.0
+ipython==9.3.0
     # via ipykernel
 ipython-pygments-lexers==1.1.1
     # via ipython
@@ -79,7 +79,7 @@ jedi==0.19.2
     # via ipython
 jupyter-client==8.6.3
     # via ipykernel
-jupyter-core==5.7.2
+jupyter-core==5.8.1
     # via
     #   ipykernel
     #   jupyter-client
@@ -87,7 +87,7 @@ matplotlib-inline==0.1.7
     # via
     #   ipykernel
     #   ipython
-mypy==1.15.0
+mypy==1.16.0
     # via innholdsoversikt (pyproject.toml)
 mypy-extensions==1.1.0
     # via
@@ -95,21 +95,25 @@ mypy-extensions==1.1.0
     #   mypy
 nest-asyncio==1.6.0
     # via ipykernel
-numpy==2.0.0
-    # via pandas
+numpy==2.3.0
+    # via
+    #   innholdsoversikt (pyproject.toml)
+    #   pandas
 openpyxl==3.1.5
     # via innholdsoversikt (pyproject.toml)
-packaging==24.1
+packaging==25.0
     # via
     #   black
     #   google-cloud-bigquery
     #   ipykernel
-pandas==2.2.3
+pandas==2.3.0
     # via innholdsoversikt (pyproject.toml)
 parso==0.8.4
     # via jedi
 pathspec==0.12.1
-    # via black
+    # via
+    #   black
+    #   mypy
 pexpect==4.9.0
     # via ipython
 platformdirs==4.3.8
@@ -118,9 +122,9 @@ platformdirs==4.3.8
     #   jupyter-core
 prompt-toolkit==3.0.51
     # via ipython
-proto-plus==1.24.0
+proto-plus==1.26.1
     # via google-api-core
-protobuf==5.27.2
+protobuf==6.31.1
     # via
     #   google-api-core
     #   googleapis-common-protos
@@ -132,11 +136,11 @@ ptyprocess==0.7.0
     # via pexpect
 pure-eval==0.2.3
     # via stack-data
-pyasn1==0.6.0
+pyasn1==0.6.1
     # via
     #   pyasn1-modules
     #   rsa
-pyasn1-modules==0.4.0
+pyasn1-modules==0.4.2
     # via google-auth
 pygments==2.19.1
     # via
@@ -147,31 +151,31 @@ python-dateutil==2.9.0.post0
     #   google-cloud-bigquery
     #   jupyter-client
     #   pandas
-python-dotenv==1.0.1
+python-dotenv==1.1.0
     # via innholdsoversikt (pyproject.toml)
-pytz==2024.1
+pytz==2025.2
     # via pandas
 pyzmq==26.4.0
     # via
     #   ipykernel
     #   jupyter-client
-requests==2.32.3
+requests==2.32.4
     # via
     #   google-api-core
     #   google-cloud-bigquery
     #   google-cloud-storage
     #   innholdsoversikt (pyproject.toml)
-rsa==4.9
+rsa==4.9.1
     # via google-auth
-six==1.16.0
+six==1.17.0
     # via python-dateutil
 stack-data==0.6.3
     # via ipython
-tornado==6.5
+tornado==6.5.1
     # via
     #   ipykernel
     #   jupyter-client
-tqdm==4.66.4
+tqdm==4.67.1
     # via innholdsoversikt (pyproject.toml)
 traitlets==5.14.3
     # via
@@ -181,13 +185,13 @@ traitlets==5.14.3
     #   jupyter-client
     #   jupyter-core
     #   matplotlib-inline
-typing-extensions==4.13.2
+typing-extensions==4.14.0
     # via
     #   ipython
     #   mypy
-tzdata==2024.1
+tzdata==2025.2
     # via pandas
-urllib3==2.2.2
+urllib3==2.4.0
     # via requests
 wcwidth==0.2.13
     # via prompt-toolkit
