@@ -6,13 +6,15 @@ install:
 	pip install --upgrade pip-tools pip setuptools; \
 	$(PYTHON) -m piptools compile -o requirements/main.txt pyproject.toml; \
 	$(PYTHON) -m piptools compile --extra dev -o requirements/dev.txt pyproject.toml; \
+	$(PYTHON) -m piptools compile -o requirements/prod.txt pyproject.toml; \
 	pip install -r requirements/main.txt -r requirements/dev.txt
 
 update-deps:
 	source $(VENV); \
 	pip install --upgrade pip-tools pip setuptools; \
 	$(PYTHON) -m piptools compile --upgrade --resolver backtracking -o requirements/main.txt pyproject.toml; \
-	$(PYTHON) -m piptools compile --extra dev --upgrade --resolver backtracking -o requirements/dev.txt pyproject.toml
+	$(PYTHON) -m piptools compile --extra dev --upgrade --resolver backtracking -o requirements/dev.txt pyproject.toml; \
+	$(PYTHON) -m piptools compile --upgrade --resolver backtracking -o requirements/prod.txt pyproject.toml
 
 init:
 	source $(VENV); \

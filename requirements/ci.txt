@@ -1,0 +1,10 @@
+#
+# Minimal requirements for GitHub Actions CI/CD pipeline
+# This file contains only the essential packages needed for the build process
+#
+# Core packages for basic Python operations
+requests==2.32.4
+python-dotenv==1.1.0
+
+# Only include if the CI needs to run any validation that requires these packages
+# For now, keep it minimal since Docker handles the actual application dependencies
