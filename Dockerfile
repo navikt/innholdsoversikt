@@ -20,12 +20,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and install Python dependencies
+COPY requirements/prod.txt ./requirements/
 COPY pyproject.toml .
 COPY src/ src/
 RUN pip install --upgrade pip \
     && pip install build wheel setuptools \
-    && pip install . \
-    && pip install --no-cache-dir -e .
+    && pip install --no-cache-dir -r requirements/prod.txt \
+    && pip install --no-deps .
 
 # ─────────────────────────────────────────────────────────
 
