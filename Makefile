@@ -1,4 +1,4 @@
-PYTHON=python3.10
+PYTHON=python3.11
 VENV= .venv/bin/activate
 
 install:

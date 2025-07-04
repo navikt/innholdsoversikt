@@ -12,14 +12,18 @@ black==25.1.0
     # via innholdsoversikt (pyproject.toml)
 cachetools==5.5.2
     # via google-auth
-certifi==2025.4.26
+certifi==2025.6.15
     # via requests
+cffi==1.17.1
+    # via cryptography
 charset-normalizer==3.4.2
     # via requests
 click==8.2.1
     # via black
 comm==0.2.2
     # via ipykernel
+cryptography==45.0.5
+    # via innholdsoversikt (pyproject.toml)
 debugpy==1.8.14
     # via ipykernel
 decorator==5.2.1
@@ -28,7 +32,7 @@ et-xmlfile==2.0.0
     # via openpyxl
 executing==2.2.0
     # via stack-data
-google-api-core[grpc]==2.25.0
+google-api-core[grpc]==2.25.1
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
@@ -45,7 +49,7 @@ google-cloud-core==2.4.3
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==3.1.0
+google-cloud-storage==3.1.1
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.7.1
     # via
@@ -59,11 +63,11 @@ googleapis-common-protos==1.70.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.73.0
+grpcio==1.73.1
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.73.0
+grpcio-status==1.73.1
     # via google-api-core
 idna==3.10
     # via requests
@@ -87,7 +91,7 @@ matplotlib-inline==0.1.7
     # via
     #   ipykernel
     #   ipython
-mypy==1.16.0
+mypy==1.16.1
     # via innholdsoversikt (pyproject.toml)
 mypy-extensions==1.1.0
     # via
@@ -95,7 +99,7 @@ mypy-extensions==1.1.0
     #   mypy
 nest-asyncio==1.6.0
     # via ipykernel
-numpy==2.3.0
+numpy==2.2.6
     # via
     #   innholdsoversikt (pyproject.toml)
     #   pandas
@@ -106,7 +110,7 @@ packaging==25.0
     #   black
     #   google-cloud-bigquery
     #   ipykernel
-pandas==2.3.0
+pandas==2.2.3
     # via innholdsoversikt (pyproject.toml)
 parso==0.8.4
     # via jedi
@@ -142,18 +146,20 @@ pyasn1==0.6.1
     #   rsa
 pyasn1-modules==0.4.2
     # via google-auth
-pygments==2.19.1
+pycparser==2.22
+    # via cffi
+pygments==2.19.2
     # via ipython
 python-dateutil==2.9.0.post0
     # via
     #   google-cloud-bigquery
     #   jupyter-client
     #   pandas
-python-dotenv==1.1.0
+python-dotenv==1.1.1
     # via innholdsoversikt (pyproject.toml)
 pytz==2025.2
     # via pandas
-pyzmq==26.4.0
+pyzmq==27.0.0
     # via
     #   ipykernel
     #   jupyter-client
@@ -189,7 +195,7 @@ typing-extensions==4.14.0
     #   mypy
 tzdata==2025.2
     # via pandas
-urllib3==2.4.0
+urllib3==2.5.0
     # via requests
 wcwidth==0.2.13
     # via prompt-toolkit

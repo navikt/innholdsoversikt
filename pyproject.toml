@@ -3,23 +3,24 @@ name = "innholdsoversikt"
 version = "0.1.0"
 description = "cronjob for å samle oversikt over innhold på nav.no"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = {file = "LICENSE"}
 
 dependencies = [
-    "requests",
+    "requests>=2.32.0",
     "pandas>=2.0.0,<2.3.0",
     "numpy>=1.24.0,<2.3.0",
     "tqdm",
     "google-cloud-bigquery",
     "google-cloud-storage",
-    "python-dotenv"
+    "python-dotenv",
+    "cryptography>=41.0.0"
 ]
 
 [project.optional-dependencies]
 dev = [
     "ipykernel",
-    "ipython<9.0.0",  # Ensure Python 3.10 compatibility
+    "ipython<9.0.0",  # Ensure Python 3.11 compatibility
     "black",
     "openpyxl",
     "mypy",

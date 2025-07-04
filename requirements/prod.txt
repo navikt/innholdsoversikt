@@ -6,11 +6,15 @@
 #
 cachetools==5.5.2
     # via google-auth
-certifi==2025.4.26
+certifi==2025.6.15
     # via requests
+cffi==1.17.1
+    # via cryptography
 charset-normalizer==3.4.2
     # via requests
-google-api-core[grpc]==2.25.0
+cryptography==45.0.5
+    # via innholdsoversikt (pyproject.toml)
+google-api-core[grpc]==2.25.1
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
@@ -27,7 +31,7 @@ google-cloud-core==2.4.3
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==3.1.0
+google-cloud-storage==3.1.1
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.7.1
     # via
@@ -41,11 +45,11 @@ googleapis-common-protos==1.70.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.73.0
+grpcio==1.73.1
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.73.0
+grpcio-status==1.73.1
     # via google-api-core
 idna==3.10
     # via requests
@@ -71,11 +75,13 @@ pyasn1==0.6.1
     #   rsa
 pyasn1-modules==0.4.2
     # via google-auth
+pycparser==2.22
+    # via cffi
 python-dateutil==2.9.0.post0
     # via
     #   google-cloud-bigquery
     #   pandas
-python-dotenv==1.1.0
+python-dotenv==1.1.1
     # via innholdsoversikt (pyproject.toml)
 pytz==2025.2
     # via pandas
@@ -93,5 +99,5 @@ tqdm==4.67.1
     # via innholdsoversikt (pyproject.toml)
 tzdata==2025.2
     # via pandas
-urllib3==2.4.0
+urllib3==2.5.0
     # via requests
