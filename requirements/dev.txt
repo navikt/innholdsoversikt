@@ -99,7 +99,7 @@ mypy-extensions==1.1.0
     #   mypy
 nest-asyncio==1.6.0
     # via ipykernel
-numpy==2.2.6
+numpy==2.3.1
     # via
     #   innholdsoversikt (pyproject.toml)
     #   pandas
