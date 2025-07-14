@@ -31,7 +31,7 @@ google-cloud-core==2.4.3
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==3.1.1
+google-cloud-storage==3.2.0
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.7.1
     # via
