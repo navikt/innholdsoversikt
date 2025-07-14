@@ -73,7 +73,7 @@ idna==3.10
     # via requests
 ipykernel==6.29.5
     # via innholdsoversikt (pyproject.toml)
-ipython==8.37.0
+ipython==9.4.0
     # via
     #   innholdsoversikt (pyproject.toml)
     #   ipykernel
