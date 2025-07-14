@@ -59,7 +59,7 @@ numpy==2.2.6
     #   pandas
 packaging==25.0
     # via google-cloud-bigquery
-pandas==2.2.3
+pandas==2.3.1
     # via innholdsoversikt (pyproject.toml)
 proto-plus==1.26.1
     # via google-api-core
