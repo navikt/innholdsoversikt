@@ -1,5 +1,5 @@
 # Stage 1: Build and install Python dependencies
-FROM python:3.10-slim-bookworm AS compile-image
+FROM python:3.11-slim-bookworm AS compile-image
 
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
@@ -10,13 +10,16 @@ RUN python -m venv $VIRTUAL_ENV
 # Set working directory
 WORKDIR /app
 
-# Install system build dependencies (only during this stage)
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Install system build dependencies with security updates (only during this stage)
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
     build-essential \
     gcc \
     libffi-dev \
     libssl-dev \
     libpq-dev \
+    openssl \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and install Python dependencies
@@ -31,7 +34,7 @@ RUN pip install --upgrade pip \
 # ─────────────────────────────────────────────────────────
 
 # Stage 2: Runtime image
-FROM python:3.10-slim-bookworm AS build-image
+FROM python:3.11-slim-bookworm AS build-image
 
 # Create non-root user
 RUN groupadd -g 999 python && useradd -r -u 999 -g python python
