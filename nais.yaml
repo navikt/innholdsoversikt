@@ -2,9 +2,9 @@ apiVersion: nais.io/v1
 kind: Naisjob
 metadata:
   labels:
-    team: personbruker
+    team: navno
   name: innholdsoversikt-dashboard
-  namespace: personbruker
+  namespace: navno
 spec:
   accessPolicy:
     outbound:

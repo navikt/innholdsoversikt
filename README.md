@@ -35,14 +35,14 @@ via [dataquery APIet](https://github.com/navikt/nav-enonicxp-dataquery).
 ```
 kubectl config use-context dev-gcp
 kubectl config use-context prod-gcp
-kubectl -npersonbruker get pods
+kubectl -n navno get pods
 ```
 
 **Se naisjobs i kubernetes**
 
 ```
-kubectl get naisjob -npersonbruker # viser naisjob i namespace
-kubectl describe naisjob innholdsoversikt-dashboard -npersonbruker # beskriver naisjob metadata
+kubectl get naisjob -n navno # viser naisjob i namespace
+kubectl describe naisjob innholdsoversikt-dashboard -n navno # beskriver naisjob metadata
 ```
 
 
@@ -50,8 +50,8 @@ kubectl describe naisjob innholdsoversikt-dashboard -npersonbruker # beskriver n
 
 ```
 kubectl create job innholdsdashboard 
---from=cronjob/innholdsoversikt-dashboard -npersonbruker
-kubectl delete naisjob innholdsoversikt-dashboard -npersonbruker
+--from=cronjob/innholdsoversikt-dashboard -n navno
+kubectl delete naisjob innholdsoversikt-dashboard -n navno
 ```
 
 **Secrets**
@@ -59,10 +59,10 @@ kubectl delete naisjob innholdsoversikt-dashboard -npersonbruker
 ```
 kubectl config use-context dev-gcp
 kubectl config use-context prod-gcp
-kubectl -npersonbruker create secret generic innholdsmengde-dashboard-secrets --from-file=secrets.json
-kubectl -npersonbruker get secret 
-kubectl -npersonbruker describe secrets/innholdsmengde-dashboard-secrets
-kubectl -npersonbruker delete secret innholdsmengde-dashboard-secrets
+kubectl -n navno create secret generic innholdsmengde-dashboard-secrets --from-file=secrets.json
+kubectl -n navno get secret 
+kubectl -n navno describe secrets/innholdsmengde-dashboard-secrets
+kubectl -n navno delete secret innholdsmengde-dashboard-secrets
 ```
 
 **Bygg og Inspiser app lokalt**

@@ -1,4 +1,4 @@
-Dette datasettet beskriver hvor mye innhold er lagret i team personbruker sitt CMS, Enonic XP. Det inneholder mesteparten av innholdet på www.nav.no.
+Dette datasettet beskriver hvor mye innhold er lagret i team navno sitt CMS, Enonic XP. Det inneholder mesteparten av innholdet på www.nav.no.
 
 Dataene er lagret i en tidsserie for å overvåke innholdsmengde og mengden innhold fordelt på tjenester.
  

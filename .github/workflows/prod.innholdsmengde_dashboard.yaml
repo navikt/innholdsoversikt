@@ -47,7 +47,7 @@ jobs:
       uses: nais/docker-build-push@v0
       id: docker-build-push
       with:
-        team: personbruker
+        team: navno
         image_suffix: innholdsoversikt-dashboard
 
   deploy:

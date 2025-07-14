@@ -2,7 +2,7 @@ Title: innholdsmengde i enonic xp
 
 Description:
 
-Dette datasettet beskriver hvor mye innhold er lagret i team personbruker sitt CMS, Enonic XP. Det inneholder mesteparten av innholdet på www.nav.no.
+Dette datasettet beskriver hvor mye innhold er lagret i team navno sitt CMS, Enonic XP. Det inneholder mesteparten av innholdet på www.nav.no.
  
 Tabellen inneholder feltene
 
