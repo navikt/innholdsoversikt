@@ -20,7 +20,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "ipykernel",
-    "ipython<9.0.0",  # Ensure Python 3.11 compatibility
+    "ipython<10.0.0",  # Ensure Python 3.11 compatibility
     "black",
     "openpyxl",
     "mypy",
