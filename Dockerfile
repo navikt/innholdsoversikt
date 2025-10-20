@@ -27,7 +27,7 @@ COPY requirements/prod.txt ./requirements/
 COPY pyproject.toml .
 COPY src/ src/
 RUN pip install --upgrade pip \
-    && pip install build wheel setuptools \
+    && pip install build wheel "setuptools>=65.6.0" \
     && pip install --no-cache-dir -r requirements/prod.txt \
     && pip install --no-deps .
 
@@ -35,6 +35,11 @@ RUN pip install --upgrade pip \
 
 # Stage 2: Runtime image
 FROM python:3.11-slim-bookworm AS build-image
+
+# Apply security updates to system libs (e.g., libssl3/openssl/libsqlite3)
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends ca-certificates openssl libsqlite3-0 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user
 RUN groupadd -g 999 python && useradd -r -u 999 -g python python

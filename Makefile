@@ -3,7 +3,7 @@ VENV= .venv/bin/activate
 
 install:
 	source $(VENV); \
-	pip install --upgrade pip-tools pip setuptools; \
+	pip install --upgrade pip-tools pip "setuptools>=65.6.0"; \
 	$(PYTHON) -m piptools compile -o requirements/main.txt pyproject.toml; \
 	$(PYTHON) -m piptools compile --extra dev -o requirements/dev.txt pyproject.toml; \
 	$(PYTHON) -m piptools compile -o requirements/prod.txt pyproject.toml; \
@@ -11,7 +11,7 @@ install:
 
 update-deps:
 	source $(VENV); \
-	pip install --upgrade pip-tools pip setuptools; \
+	pip install --upgrade pip-tools pip "setuptools>=65.6.0"; \
 	$(PYTHON) -m piptools compile --upgrade --resolver backtracking -o requirements/main.txt pyproject.toml; \
 	$(PYTHON) -m piptools compile --extra dev --upgrade --resolver backtracking -o requirements/dev.txt pyproject.toml; \
 	$(PYTHON) -m piptools compile --upgrade --resolver backtracking -o requirements/prod.txt pyproject.toml
