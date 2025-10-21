@@ -1,60 +1,37 @@
 # Stage 1: Build and install Python dependencies
-FROM python:3.11-slim-bookworm AS compile-image
-
-ENV VIRTUAL_ENV=/opt/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# Install Python virtual environment
-RUN python -m venv $VIRTUAL_ENV
-
-# Set working directory
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.12-dev AS compile-image
 WORKDIR /app
 
-# Install system build dependencies with security updates (only during this stage)
-RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends \
-    build-essential \
-    gcc \
-    libffi-dev \
-    libssl-dev \
-    libpq-dev \
-    openssl \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+RUN python3 -m venv venv
+ENV PATH=/app/venv/bin:$PATH
 
 # Copy and install Python dependencies
-COPY requirements/prod.txt ./requirements/
+# Copy the whole requirements dir to support includes
+COPY requirements/ ./requirements/
 COPY pyproject.toml .
 COPY src/ src/
-RUN pip install --upgrade pip \
-    && pip install build wheel "setuptools>=65.6.0" \
-    && pip install --no-cache-dir -r requirements/prod.txt \
-    && pip install --no-deps .
+
+RUN pip install -r ./requirements/prod.txt
 
 # ─────────────────────────────────────────────────────────
 
 # Stage 2: Runtime image
-FROM python:3.11-slim-bookworm AS build-image
-
-# Apply security updates to system libs (e.g., libssl3/openssl/libsqlite3)
-RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.12 AS build-image
 
 # Create non-root user
-RUN groupadd -g 999 python && useradd -r -u 999 -g python python
+## RUN groupadd -g 999 python && useradd -r -u 999 -g python python
 
-USER python
+## USER python
 WORKDIR /app
 
 # Copy virtualenv from build stage
-COPY --chown=python:python --from=compile-image /opt/venv /opt/venv
+COPY --from=compile-image /app/venv /app/venv
 
 # Copy source code
-COPY --chown=python:python src/innholdsoversikt .
+COPY src/innholdsoversikt .
 
 # Set environment and entrypoint
-ENV VIRTUAL_ENV=/opt/venv
+ENV VIRTUAL_ENV=/app/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV GCP_BQ_OPPDATERING_CREDS=secrets.json
 
