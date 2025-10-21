@@ -38,7 +38,7 @@ FROM python:3.11-slim-bookworm AS build-image
 
 # Apply security updates to system libs (e.g., libssl3/openssl/libsqlite3)
 RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends ca-certificates openssl libsqlite3-0 \
+    && apt-get install -y --no-install-recommends ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user
