@@ -4,24 +4,18 @@ FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14-dev AS
 WORKDIR /app
 
 ENV VIRTUAL_ENV=/opt/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# Install system build dependencies with security updates (only during this stage)
-RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends \
-    build-essential \
-    gcc \
-    libffi-dev \
-    libssl-dev \
-    libpq-dev \
-    openssl \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy and install Python dependencies
 RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:${PATH}"
 
-COPY requirements/prod.txt ./requirements/
+# Install system build dependencies (Wolfi/apk)
+RUN apk add --no-cache \
+    build-base \
+    libffi-dev \
+    openssl-dev \
+    postgresql-dev \
+    ca-certificates
+
+COPY requirements/prod.txt ./requirements/prod.txt
 COPY pyproject.toml .
 COPY src/ src/
 
@@ -37,15 +31,15 @@ FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14 AS run
 
 WORKDIR /app
 
-# Copy virtualenv from build stage
-COPY --chown=python:python --from=builder /opt/venv /opt/venv
-
-# Copy source code
-COPY --chown=python:python src/innholdsoversikt .
-
 # Set environment and entrypoint
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV GCP_BQ_OPPDATERING_CREDS=secrets.json
+
+# Copy virtualenv from build stage
+COPY --from=builder /opt/venv /opt/venv
+
+# Copy source code
+COPY src/innholdsoversikt/ ./
 
 CMD ["python", "main.py"]
