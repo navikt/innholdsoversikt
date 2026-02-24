@@ -1,11 +1,14 @@
 # Stage 1: Build and install Python dependencies
 FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14-dev AS builder
 
+# Set working directory
 WORKDIR /app
 
 ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+# Install Python virtual environment
 RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:${PATH}"
 
 # Install system build dependencies (Wolfi/apk)
 RUN apk add --no-cache \
@@ -15,6 +18,7 @@ RUN apk add --no-cache \
     postgresql-dev \
     ca-certificates
 
+# Copy and install Python dependencies
 COPY requirements/prod.txt ./requirements/prod.txt
 COPY pyproject.toml .
 COPY src/ src/
