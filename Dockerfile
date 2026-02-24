@@ -1,13 +1,9 @@
 # Stage 1: Build and install Python dependencies
-FROM python:3.11-slim-bookworm AS compile-image
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14-dev AS builder
 
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Install Python virtual environment
-RUN python -m venv $VIRTUAL_ENV
-
-# Set working directory
 WORKDIR /app
 
 # Install system build dependencies with security updates (only during this stage)
@@ -23,34 +19,31 @@ RUN apt-get update && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and install Python dependencies
+RUN python -m venv /opt/venv
+
 COPY requirements/prod.txt ./requirements/
 COPY pyproject.toml .
 COPY src/ src/
+
 RUN pip install --upgrade pip \
-    && pip install build wheel setuptools \
-    && pip install --no-cache-dir -r requirements/prod.txt \
-    && pip install --no-deps .
+ && pip install --no-cache-dir build wheel setuptools \
+ && pip install --no-cache-dir -r requirements/prod.txt \
+ && pip install --no-cache-dir --no-deps .
 
 # ─────────────────────────────────────────────────────────
 
-# Stage 2: Runtime image
-FROM python:3.11-slim-bookworm AS build-image
-
-# Create non-root user
-RUN groupadd -g 999 python && useradd -r -u 999 -g python python
-
-USER python
-WORKDIR /app
-
-# Copy virtualenv from build stage
-COPY --chown=python:python --from=compile-image /opt/venv /opt/venv
+# Stage 2: Runtime image (distroless)
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14 AS runtime
 
 # Copy source code
 COPY --chown=python:python src/innholdsoversikt .
 
-# Set environment and entrypoint
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV GCP_BQ_OPPDATERING_CREDS=secrets.json
+
+WORKDIR /app
+
+COPY --from=builder /opt/venv /opt/venv
 
 CMD ["python", "main.py"]
