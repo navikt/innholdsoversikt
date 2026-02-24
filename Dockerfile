@@ -35,15 +35,17 @@ RUN pip install --upgrade pip \
 # Stage 2: Runtime image (distroless)
 FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14 AS runtime
 
+WORKDIR /app
+
+# Copy virtualenv from build stage
+COPY --chown=python:python --from=builder /opt/venv /opt/venv
+
 # Copy source code
 COPY --chown=python:python src/innholdsoversikt .
 
+# Set environment and entrypoint
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV GCP_BQ_OPPDATERING_CREDS=secrets.json
-
-WORKDIR /app
-
-COPY --from=builder /opt/venv /opt/venv
 
 CMD ["python", "main.py"]
