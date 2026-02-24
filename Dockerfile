@@ -1,10 +1,10 @@
 # Stage 1: Build and install Python dependencies
 FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14-dev AS builder
 
+WORKDIR /app
+
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-WORKDIR /app
 
 # Install system build dependencies with security updates (only during this stage)
 RUN apt-get update && apt-get upgrade -y \
