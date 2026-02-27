@@ -1,6 +1,8 @@
 # Stage 1: Build and install Python dependencies
 FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14-dev AS builder
 
+USER root
+
 # Set working directory
 WORKDIR /app
 
