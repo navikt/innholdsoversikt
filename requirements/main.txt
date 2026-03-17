@@ -6,7 +6,7 @@
 #
 asttokens==3.0.1
     # via stack-data
-black==25.1.0
+black==26.1.0
     # via innholdsoversikt (pyproject.toml)
 cachetools==5.5.2
     # via google-auth
