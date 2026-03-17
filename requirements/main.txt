@@ -108,7 +108,7 @@ packaging==25.0
     #   black
     #   google-cloud-bigquery
     #   ipykernel
-pandas==2.2.3
+pandas==3.0.1
     # via innholdsoversikt (pyproject.toml)
 parso==0.8.6
     # via jedi
