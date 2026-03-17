@@ -48,4 +48,4 @@ COPY --from=builder /opt/venv /opt/venv
 # Copy source code
 COPY src/innholdsoversikt/ ./
 
-CMD ["python", "main.py"]
+CMD ["main.py"]
