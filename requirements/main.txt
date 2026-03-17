@@ -28,7 +28,7 @@ decorator==5.2.1
     # via ipython
 et-xmlfile==2.0.0
     # via openpyxl
-executing==2.2.0
+executing==2.2.1
     # via stack-data
 google-api-core[grpc]==2.25.1
     # via
