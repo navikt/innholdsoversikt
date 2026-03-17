@@ -91,7 +91,7 @@ matplotlib-inline==0.1.7
     # via
     #   ipykernel
     #   ipython
-mypy==1.16.1
+mypy==1.19.1
     # via innholdsoversikt (pyproject.toml)
 mypy-extensions==1.1.0
     # via
