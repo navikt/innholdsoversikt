@@ -48,4 +48,5 @@ COPY --from=builder /opt/venv /opt/venv
 # Copy source code
 COPY src/innholdsoversikt/ ./
 
+ENTRYPOINT ["/opt/venv/bin/python"]
 CMD ["main.py"]

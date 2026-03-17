@@ -28,4 +28,5 @@ COPY /src/innholdsoversikt .
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV GCP_BQ_OPPDATERING_CREDS=secrets.json
+ENTRYPOINT ["/opt/venv/bin/python"]
 CMD ["main.py"]
