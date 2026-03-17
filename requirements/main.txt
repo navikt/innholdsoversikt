@@ -85,7 +85,7 @@ jupyter-core==5.8.1
     # via
     #   ipykernel
     #   jupyter-client
-matplotlib-inline==0.1.7
+matplotlib-inline==0.2.1
     # via
     #   ipykernel
     #   ipython
