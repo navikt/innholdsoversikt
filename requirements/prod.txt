@@ -12,7 +12,7 @@ cffi==1.17.1
     # via cryptography
 charset-normalizer==3.4.5
     # via requests
-cryptography==45.0.5
+cryptography==46.0.5
     # via innholdsoversikt (pyproject.toml)
 google-api-core[grpc]==2.30.0
     # via
