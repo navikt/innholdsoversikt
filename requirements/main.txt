@@ -20,7 +20,7 @@ click==8.3.1
     # via black
 comm==0.2.3
     # via ipykernel
-cryptography==45.0.5
+cryptography==46.0.5
     # via innholdsoversikt (pyproject.toml)
 debugpy==1.8.20
     # via ipykernel
