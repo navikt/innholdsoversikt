@@ -105,7 +105,7 @@ numpy==2.4.3
     #   pandas
 openpyxl==3.1.5
     # via innholdsoversikt (pyproject.toml)
-packaging==25.0
+packaging==26.0
     # via
     #   black
     #   google-cloud-bigquery
