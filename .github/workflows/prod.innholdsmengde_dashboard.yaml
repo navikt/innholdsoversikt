@@ -5,6 +5,10 @@ on:
       - main
   workflow_dispatch:
 
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: true
+
 env:
   docker_image: ghcr.io/navikt/innholdsoversikt-dashboard:${{ github.sha }}
 
