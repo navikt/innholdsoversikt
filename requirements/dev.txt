@@ -16,7 +16,7 @@ certifi==2025.6.15
     # via requests
 cffi==1.17.1
     # via cryptography
-charset-normalizer==3.4.5
+charset-normalizer==3.4.6
     # via requests
 click==8.3.1
     # via black
@@ -37,7 +37,7 @@ google-api-core[grpc]==2.30.0
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.49.0
+google-auth==2.49.1
     # via
     #   google-api-core
     #   google-cloud-bigquery
