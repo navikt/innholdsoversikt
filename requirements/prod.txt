@@ -8,60 +8,60 @@ certifi==2026.2.25
     # via requests
 cffi==2.0.0
     # via cryptography
-charset-normalizer==3.4.6
+charset-normalizer==3.4.7
     # via requests
-cryptography==46.0.5
+cryptography==46.0.7
     # via
     #   google-auth
     #   innholdsoversikt (pyproject.toml)
-google-api-core[grpc]==2.30.0
+google-api-core[grpc]==2.30.3
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.49.1
+google-auth==2.49.2
     # via
     #   google-api-core
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-cloud-bigquery==3.40.1
+google-cloud-bigquery==3.41.0
     # via innholdsoversikt (pyproject.toml)
-google-cloud-core==2.5.0
+google-cloud-core==2.5.1
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==3.9.0
+google-cloud-storage==3.10.1
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.8.0
     # via
     #   google-cloud-storage
     #   google-resumable-media
-google-resumable-media==2.8.0
+google-resumable-media==2.8.2
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-googleapis-common-protos==1.73.0
+googleapis-common-protos==1.74.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.78.0
+grpcio==1.80.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.78.0
+grpcio-status==1.80.0
     # via google-api-core
 idna==3.11
     # via requests
-numpy==2.4.3
+numpy==2.4.4
     # via
     #   innholdsoversikt (pyproject.toml)
     #   pandas
 packaging==26.0
     # via google-cloud-bigquery
-pandas==3.0.1
+pandas==3.0.2
     # via innholdsoversikt (pyproject.toml)
-proto-plus==1.27.1
+proto-plus==1.27.2
     # via google-api-core
 protobuf==6.33.5
     # via
@@ -81,7 +81,7 @@ python-dateutil==2.9.0.post0
     #   pandas
 python-dotenv==1.2.2
     # via innholdsoversikt (pyproject.toml)
-requests==2.32.5
+requests==2.33.1
     # via
     #   google-api-core
     #   google-cloud-bigquery
