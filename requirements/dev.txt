@@ -148,7 +148,7 @@ pyasn1-modules==0.4.2
     # via google-auth
 pycparser==2.22
     # via cffi
-pygments==2.19.2
+pygments==2.20.0
     # via ipython
 python-dateutil==2.9.0.post0
     # via
