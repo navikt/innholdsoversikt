@@ -1,4 +1,4 @@
-name: Deploy innholdsmengde_dashboard to prod gcp
+name: Build and deploy
 on:
   push:
     branches:
