@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/prod.txt pyproject.toml
 #
-certifi==2026.4.22
+certifi==2026.5.20
     # via requests
 cffi==2.0.0
     # via cryptography
@@ -45,15 +45,15 @@ googleapis-common-protos==1.75.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.80.0
+grpcio==1.81.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.80.0
+grpcio-status==1.81.0
     # via google-api-core
-idna==3.15
+idna==3.17
     # via requests
-numpy==2.4.5
+numpy==2.4.6
     # via
     #   innholdsoversikt (pyproject.toml)
     #   pandas
