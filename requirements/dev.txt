@@ -132,7 +132,7 @@ prompt-toolkit==3.0.52
     # via ipython
 proto-plus==1.28.1
     # via google-api-core
-protobuf==6.33.6
+protobuf==7.35.1
     # via
     #   google-api-core
     #   googleapis-common-protos
