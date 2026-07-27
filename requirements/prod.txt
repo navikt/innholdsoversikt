@@ -14,12 +14,12 @@ cryptography==48.0.1
     # via
     #   google-auth
     #   innholdsoversikt (pyproject.toml)
-google-api-core[grpc]==2.31.0
+google-api-core[grpc]==2.32.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.55.2
+google-auth==2.56.0
     # via
     #   google-api-core
     #   google-cloud-bigquery
@@ -31,7 +31,7 @@ google-cloud-core==2.6.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==3.12.1
+google-cloud-storage==3.13.0
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.8.0
     # via
@@ -89,7 +89,7 @@ requests==2.34.2
     #   innholdsoversikt (pyproject.toml)
 six==1.17.0
     # via python-dateutil
-tqdm==4.68.4
+tqdm==4.69.0
     # via innholdsoversikt (pyproject.toml)
 typing-extensions==4.16.0
     # via grpcio

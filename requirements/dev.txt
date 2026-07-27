@@ -32,12 +32,12 @@ et-xmlfile==2.0.0
     # via openpyxl
 executing==2.2.1
     # via stack-data
-google-api-core[grpc]==2.31.0
+google-api-core[grpc]==2.32.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.55.2
+google-auth==2.56.0
     # via
     #   google-api-core
     #   google-cloud-bigquery
@@ -49,7 +49,7 @@ google-cloud-core==2.6.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==3.12.1
+google-cloud-storage==3.13.0
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.8.0
     # via
@@ -124,7 +124,7 @@ pathspec==1.1.1
     #   mypy
 pexpect==4.9.0
     # via ipython
-platformdirs==4.10.0
+platformdirs==4.10.1
     # via
     #   black
     #   jupyter-core
@@ -185,7 +185,7 @@ tornado==6.5.7
     # via
     #   ipykernel
     #   jupyter-client
-tqdm==4.68.4
+tqdm==4.69.0
     # via innholdsoversikt (pyproject.toml)
 traitlets==5.15.1
     # via
