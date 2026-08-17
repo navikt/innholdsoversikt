@@ -4,9 +4,9 @@
 #
 #    pip-compile --output-file=requirements/prod.txt pyproject.toml
 #
-certifi==2026.6.17
+certifi==2026.7.22
     # via requests
-cffi==2.1.0
+cffi==2.1.1
     # via cryptography
 charset-normalizer==3.4.9
     # via requests
@@ -14,42 +14,42 @@ cryptography==48.0.1
     # via
     #   google-auth
     #   innholdsoversikt (pyproject.toml)
-google-api-core[grpc]==2.31.0
+google-api-core[grpc]==2.34.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.55.2
+google-auth==2.56.3
     # via
     #   google-api-core
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-cloud-bigquery==3.42.2
+google-cloud-bigquery==3.43.0
     # via innholdsoversikt (pyproject.toml)
-google-cloud-core==2.6.0
+google-cloud-core==2.6.1
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==3.12.1
+google-cloud-storage==3.13.1
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.8.0
     # via
     #   google-cloud-storage
     #   google-resumable-media
-google-resumable-media==2.10.0
+google-resumable-media==2.10.1
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-googleapis-common-protos==1.75.0
+googleapis-common-protos==1.75.1
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.82.1
+grpcio==1.83.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.82.1
+grpcio-status==1.83.0
     # via google-api-core
 idna==3.18
     # via requests
@@ -57,11 +57,11 @@ numpy==2.4.6
     # via
     #   innholdsoversikt (pyproject.toml)
     #   pandas
-packaging==26.2
+packaging==26.3
     # via google-cloud-bigquery
-pandas==3.0.3
+pandas==3.0.5
     # via innholdsoversikt (pyproject.toml)
-proto-plus==1.28.1
+proto-plus==1.28.3
     # via google-api-core
 protobuf==7.35.1
     # via
@@ -89,7 +89,7 @@ requests==2.34.2
     #   innholdsoversikt (pyproject.toml)
 six==1.17.0
     # via python-dateutil
-tqdm==4.68.4
+tqdm==4.70.0
     # via innholdsoversikt (pyproject.toml)
 typing-extensions==4.16.0
     # via grpcio
