@@ -4,7 +4,7 @@
 #
 # Core packages for basic Python operations
 requests>=2.32.0
-python-dotenv>=1.1.0
+python-dotenv>=1.2.3
 
 # Only include if the CI needs to run any validation that requires these packages
 # For now, keep it minimal since Docker handles the actual application dependencies
