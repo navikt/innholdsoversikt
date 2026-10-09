@@ -97,5 +97,5 @@ tqdm==4.68.4
     # via innholdsoversikt (pyproject.toml)
 typing-extensions==4.16.0
     # via grpcio
-urllib3==2.7.0
+urllib3==2.8.0
     # via requests
