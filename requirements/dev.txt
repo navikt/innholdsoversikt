@@ -4,7 +4,7 @@
 #
 #    pip-compile --extra=dev --output-file=requirements/dev.txt pyproject.toml
 #
-appnope==0.1.4
+appnope==1.0.0
     # via ipykernel
 asttokens==3.0.2
     # via stack-data
