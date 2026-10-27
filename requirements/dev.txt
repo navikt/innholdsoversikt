@@ -79,7 +79,7 @@ ipython==9.17.1
     #   ipykernel
 ipython-pygments-lexers==1.1.1
     # via ipython
-isort==8.0.1
+isort==9.0.2
     # via innholdsoversikt (pyproject.toml)
 jedi==0.20.1
     # via ipython
