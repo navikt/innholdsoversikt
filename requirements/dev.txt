@@ -10,7 +10,7 @@ asttokens==3.0.2
     # via stack-data
 black==26.10.1
     # via innholdsoversikt (pyproject.toml)
-certifi==2026.7.22
+certifi==2026.10.18
     # via requests
 cffi==2.1.1
     # via cryptography
@@ -37,19 +37,19 @@ google-api-core[grpc]==2.42.0
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.61.0
+google-auth==2.62.0
     # via
     #   google-api-core
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-cloud-bigquery==3.46.1
+google-cloud-bigquery==3.46.2
     # via innholdsoversikt (pyproject.toml)
 google-cloud-core==2.8.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==3.17.0
+google-cloud-storage==3.17.1
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.9.0
     # via
@@ -81,7 +81,7 @@ ipython-pygments-lexers==1.1.1
     # via ipython
 isort==8.0.1
     # via innholdsoversikt (pyproject.toml)
-jedi==0.20.0
+jedi==0.20.1
     # via ipython
 jupyter-client==8.10.0
     # via ipykernel
@@ -95,7 +95,7 @@ matplotlib-inline==0.2.2
     # via
     #   ipykernel
     #   ipython
-mypy==2.2.0
+mypy==2.4.0
     # via innholdsoversikt (pyproject.toml)
 mypy-extensions==1.1.0
     # via
@@ -124,7 +124,7 @@ pathspec==1.1.1
     #   mypy
 pexpect==4.9.0
     # via ipython
-platformdirs==4.13.0
+platformdirs==4.13.5
     # via
     #   black
     #   jupyter-core

@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/main.txt pyproject.toml
 #
-certifi==2026.7.22
+certifi==2026.10.18
     # via requests
 cffi==2.1.1
     # via cryptography
@@ -19,19 +19,19 @@ google-api-core[grpc]==2.42.0
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.61.0
+google-auth==2.62.0
     # via
     #   google-api-core
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-cloud-bigquery==3.46.1
+google-cloud-bigquery==3.46.2
     # via innholdsoversikt (pyproject.toml)
 google-cloud-core==2.8.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-google-cloud-storage==3.17.0
+google-cloud-storage==3.17.1
     # via innholdsoversikt (pyproject.toml)
 google-crc32c==1.9.0
     # via
