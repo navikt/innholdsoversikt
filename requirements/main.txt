@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/main.txt pyproject.toml
 #
-certifi==2026.10.18
+certifi==2026.10.23
     # via requests
 cffi==2.1.1
     # via cryptography
@@ -14,7 +14,7 @@ cryptography==50.0.2
     # via
     #   google-auth
     #   innholdsoversikt (pyproject.toml)
-google-api-core[grpc]==2.42.0
+google-api-core[grpc]==2.43.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
@@ -41,15 +41,15 @@ google-resumable-media==2.11.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-googleapis-common-protos==1.75.5
+googleapis-common-protos==1.76.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.84.0
+grpcio==1.85.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.84.0
+grpcio-status==1.85.0
     # via google-api-core
 idna==3.20
     # via requests
@@ -59,7 +59,7 @@ numpy==2.4.6
     #   pandas
 packaging==26.3
     # via google-cloud-bigquery
-pandas==3.0.6
+pandas==3.1.0
     # via innholdsoversikt (pyproject.toml)
 proto-plus==1.29.0
     # via google-api-core
@@ -75,7 +75,7 @@ pyasn1==0.6.4
     #   rsa
 pyasn1-modules==0.4.2
     # via google-auth
-pycparser==3.11
+pycparser==3.12
     # via cffi
 python-dateutil==2.9.0.post0
     # via
