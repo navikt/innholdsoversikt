@@ -10,7 +10,7 @@ asttokens==3.0.2
     # via stack-data
 black==26.10.1
     # via innholdsoversikt (pyproject.toml)
-certifi==2026.10.18
+certifi==2026.10.23
     # via requests
 cffi==2.1.1
     # via cryptography
@@ -32,7 +32,7 @@ et-xmlfile==2.0.0
     # via openpyxl
 executing==2.3.0
     # via stack-data
-google-api-core[grpc]==2.42.0
+google-api-core[grpc]==2.43.2
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
@@ -43,7 +43,7 @@ google-auth==2.62.0
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-cloud-bigquery==3.46.2
+google-cloud-bigquery==3.47.0
     # via innholdsoversikt (pyproject.toml)
 google-cloud-core==2.8.0
     # via
@@ -59,21 +59,21 @@ google-resumable-media==2.11.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-googleapis-common-protos==1.75.5
+googleapis-common-protos==1.76.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.84.0
+grpcio==1.85.1
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.84.0
+grpcio-status==1.85.1
     # via google-api-core
 idna==3.20
     # via requests
 ipykernel==7.4.0
     # via innholdsoversikt (pyproject.toml)
-ipython==9.17.1
+ipython==9.18.0
     # via
     #   innholdsoversikt (pyproject.toml)
     #   ipykernel
@@ -95,7 +95,7 @@ matplotlib-inline==0.2.2
     # via
     #   ipykernel
     #   ipython
-mypy==2.4.0
+mypy==2.4.1
     # via innholdsoversikt (pyproject.toml)
 mypy-extensions==1.1.0
     # via
@@ -114,7 +114,7 @@ packaging==26.3
     #   black
     #   google-cloud-bigquery
     #   ipykernel
-pandas==3.0.6
+pandas==3.1.0
     # via innholdsoversikt (pyproject.toml)
 parso==0.8.7
     # via jedi
@@ -124,7 +124,7 @@ pathspec==1.1.1
     #   mypy
 pexpect==4.9.0
     # via ipython
-platformdirs==4.13.5
+platformdirs==4.14.3
     # via
     #   black
     #   jupyter-core
@@ -144,13 +144,13 @@ ptyprocess==0.7.0
     # via pexpect
 pure-eval==0.2.4
     # via stack-data
-pyasn1==0.6.4
+pyasn1==0.6.5
     # via
     #   pyasn1-modules
     #   rsa
 pyasn1-modules==0.4.2
     # via google-auth
-pycparser==3.11
+pycparser==3.12
     # via cffi
 pygments==2.21.0
     # via
@@ -181,7 +181,7 @@ six==1.17.0
     # via python-dateutil
 stack-data==0.6.3
     # via ipython
-tornado==6.5.10
+tornado==6.6
     # via
     #   ipykernel
     #   jupyter-client
@@ -201,5 +201,5 @@ typing-extensions==4.16.0
     #   mypy
 urllib3==2.8.0
     # via requests
-wcwidth==0.9.2
+wcwidth==0.9.4
     # via prompt-toolkit
