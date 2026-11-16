@@ -16,7 +16,7 @@ cffi==2.1.1
     # via cryptography
 charset-normalizer==3.5.2
     # via requests
-click==8.5.0
+click==8.5.1
     # via black
 comm==0.2.3
     # via ipykernel
@@ -32,12 +32,12 @@ et-xmlfile==2.0.0
     # via openpyxl
 executing==2.3.0
     # via stack-data
-google-api-core[grpc]==2.43.2
+google-api-core[grpc]==2.44.0
     # via
     #   google-cloud-bigquery
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.62.0
+google-auth==2.62.1
     # via
     #   google-api-core
     #   google-cloud-bigquery
@@ -73,7 +73,7 @@ idna==3.20
     # via requests
 ipykernel==7.4.0
     # via innholdsoversikt (pyproject.toml)
-ipython==9.18.0
+ipython==9.18.1
     # via
     #   innholdsoversikt (pyproject.toml)
     #   ipykernel
@@ -97,7 +97,7 @@ matplotlib-inline==0.2.2
     #   ipython
 mypy==2.4.1
     # via innholdsoversikt (pyproject.toml)
-mypy-extensions==1.1.0
+mypy-extensions==1.2.0
     # via
     #   black
     #   mypy
@@ -114,7 +114,7 @@ packaging==26.3
     #   black
     #   google-cloud-bigquery
     #   ipykernel
-pandas==3.1.0
+pandas==3.1.1
     # via innholdsoversikt (pyproject.toml)
 parso==0.8.7
     # via jedi
@@ -124,7 +124,7 @@ pathspec==1.1.1
     #   mypy
 pexpect==4.9.0
     # via ipython
-platformdirs==4.14.3
+platformdirs==4.14.5
     # via
     #   black
     #   jupyter-core
@@ -165,7 +165,7 @@ python-dotenv==1.2.4
     # via innholdsoversikt (pyproject.toml)
 pytokens==0.4.1
     # via black
-pyzmq==27.2.0
+pyzmq==27.3.0
     # via
     #   ipykernel
     #   jupyter-client
