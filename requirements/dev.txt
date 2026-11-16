@@ -156,7 +156,7 @@ pygments==2.21.0
     # via
     #   ipython
     #   ipython-pygments-lexers
-python-dateutil==2.9.0.post0
+python-dateutil==4.0.0
     # via
     #   google-cloud-bigquery
     #   jupyter-client
