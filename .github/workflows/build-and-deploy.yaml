@@ -41,7 +41,7 @@ jobs:
         python -m pip install -r requirements/prod.txt
 
     - name: Build and push image
-      uses: nais/docker-build-push@v0
+      uses: nais/docker-build-push@v1
       id: docker-build-push
       with:
         team: navno
